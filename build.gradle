@@ -9,9 +9,10 @@ allprojects {
 	apply plugin: 'groovy'
 	
 	apply plugin: 'eclipse'
-	eclipse {		
-		pathVariables "GRADLE_CACHE": file("${gradle.startParameter.gradleUserHomeDir}/cache")
+	eclipse {
+		pathVariables 'GRADLE_M5_CACHE': new File("${gradle.startParameter.gradleUserHomeDir}/caches/artifacts-3")
 		classpath {
+			containers.clear()
 			containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"
 		}
 	}
@@ -19,7 +20,7 @@ allprojects {
 	apply plugin: 'code-quality'
 	codeNarcConfigFileName = 'config/codenarc/rules.groovy'
 	
-	// uses m5 deprecated sourceSet.classesDir, should now use output.classesDir
+	// uses 1.0-milestone-5 deprecated sourceSet.classesDir, should now use output.classesDir
 	apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/ivy/gradle_cobertura/gradle_cobertura/1.0-rc4/coberturainit.gradle'
 	coverageSourceDirs = ['src/main/groovy']
 	

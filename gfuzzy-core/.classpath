@@ -3,19 +3,18 @@
 	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="src" path="src/main/groovy"/>
 	<classpathentry kind="src" path="src/test/groovy"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6" exported="true"/>
-	<classpathentry sourcepath="C:/Users/Ken/.gradle/caches/artifacts-3/net.sourceforge.cobertura/cobertura/c12498cf18507aa6433a94eb7d3e77d5/sources/cobertura-1.9.4.1-sources.jar" kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/net.sourceforge.cobertura/cobertura/c12498cf18507aa6433a94eb7d3e77d5/jars/cobertura-1.9.4.1.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/asm/asm/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-3.2.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/asm/asm-tree/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-tree-3.2.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/Ken/.gradle/caches/artifacts-3/oro/oro/c12498cf18507aa6433a94eb7d3e77d5/sources/oro-2.0.8-sources.jar" kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/oro/oro/c12498cf18507aa6433a94eb7d3e77d5/jars/oro-2.0.8.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/Ken/.gradle/caches/artifacts-3/log4j/log4j/c12498cf18507aa6433a94eb7d3e77d5/sources/log4j-1.2.9-sources.jar" kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/log4j/log4j/c12498cf18507aa6433a94eb7d3e77d5/jars/log4j-1.2.9.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/Ken/.gradle/caches/artifacts-3/org.apache.ant/ant/c12498cf18507aa6433a94eb7d3e77d5/sources/ant-1.7.0-sources.jar" kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/org.apache.ant/ant/c12498cf18507aa6433a94eb7d3e77d5/jars/ant-1.7.0.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/org.apache.ant/ant-launcher/c12498cf18507aa6433a94eb7d3e77d5/jars/ant-launcher-1.7.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/Ken/.gradle/caches/artifacts-3/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/sources/junit-4.8.2-sources.jar" kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/jars/junit-4.8.2.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/Ken/.gradle/caches/artifacts-3/org.codehaus.groovy/groovy/c12498cf18507aa6433a94eb7d3e77d5/sources/groovy-1.7.10-sources.jar" kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/org.codehaus.groovy/groovy/c12498cf18507aa6433a94eb7d3e77d5/jars/groovy-1.7.10.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/antlr/antlr/c12498cf18507aa6433a94eb7d3e77d5/jars/antlr-2.7.7.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/asm/asm-commons/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-commons-3.2.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/asm/asm-util/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-util-3.2.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/Ken/.gradle/caches/artifacts-3/asm/asm-analysis/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-analysis-3.2.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_M5_CACHE/net.sourceforge.cobertura/cobertura/c12498cf18507aa6433a94eb7d3e77d5/sources/cobertura-1.9.4.1-sources.jar" kind="var" path="GRADLE_M5_CACHE/net.sourceforge.cobertura/cobertura/c12498cf18507aa6433a94eb7d3e77d5/jars/cobertura-1.9.4.1.jar" exported="true"/>
+	<classpathentry kind="var" path="GRADLE_M5_CACHE/asm/asm/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-3.2.jar" exported="true"/>
+	<classpathentry kind="var" path="GRADLE_M5_CACHE/asm/asm-tree/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-tree-3.2.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_M5_CACHE/oro/oro/c12498cf18507aa6433a94eb7d3e77d5/sources/oro-2.0.8-sources.jar" kind="var" path="GRADLE_M5_CACHE/oro/oro/c12498cf18507aa6433a94eb7d3e77d5/jars/oro-2.0.8.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_M5_CACHE/log4j/log4j/c12498cf18507aa6433a94eb7d3e77d5/sources/log4j-1.2.9-sources.jar" kind="var" path="GRADLE_M5_CACHE/log4j/log4j/c12498cf18507aa6433a94eb7d3e77d5/jars/log4j-1.2.9.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_M5_CACHE/org.apache.ant/ant/c12498cf18507aa6433a94eb7d3e77d5/sources/ant-1.7.0-sources.jar" kind="var" path="GRADLE_M5_CACHE/org.apache.ant/ant/c12498cf18507aa6433a94eb7d3e77d5/jars/ant-1.7.0.jar" exported="true"/>
+	<classpathentry kind="var" path="GRADLE_M5_CACHE/org.apache.ant/ant-launcher/c12498cf18507aa6433a94eb7d3e77d5/jars/ant-launcher-1.7.0.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_M5_CACHE/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/sources/junit-4.8.2-sources.jar" kind="var" path="GRADLE_M5_CACHE/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/jars/junit-4.8.2.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_M5_CACHE/org.codehaus.groovy/groovy/c12498cf18507aa6433a94eb7d3e77d5/sources/groovy-1.7.10-sources.jar" kind="var" path="GRADLE_M5_CACHE/org.codehaus.groovy/groovy/c12498cf18507aa6433a94eb7d3e77d5/jars/groovy-1.7.10.jar" exported="true"/>
+	<classpathentry kind="var" path="GRADLE_M5_CACHE/antlr/antlr/c12498cf18507aa6433a94eb7d3e77d5/jars/antlr-2.7.7.jar" exported="true"/>
+	<classpathentry kind="var" path="GRADLE_M5_CACHE/asm/asm-commons/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-commons-3.2.jar" exported="true"/>
+	<classpathentry kind="var" path="GRADLE_M5_CACHE/asm/asm-util/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-util-3.2.jar" exported="true"/>
+	<classpathentry kind="var" path="GRADLE_M5_CACHE/asm/asm-analysis/c12498cf18507aa6433a94eb7d3e77d5/jars/asm-analysis-3.2.jar" exported="true"/>
 </classpath>
