@@ -1,5 +1,7 @@
 // use Gradle 1.0-milestone-5
 
+defaultTasks 'clean', 'build', 'cleanEclipse', 'eclipse'
+
 apply plugin: 'groovy'
 
 apply plugin: 'eclipse'
