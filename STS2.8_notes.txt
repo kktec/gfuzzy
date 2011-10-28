@@ -1,0 +1,2 @@
+STS 2.8 doesn't seem to play well with subclasses of FuzzyZoneTestCase
+STS 2.8 doesn't handle JUnit launchers for GroovyTestCase subclasses
