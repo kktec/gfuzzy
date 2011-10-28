@@ -12,6 +12,7 @@ ruleset {
 	}
 	ruleset('rulesets/unnecessary.xml') {
 		'UnnecessaryGString' enabled:false
+		'UnnecessaryObjectReferences' enabled:false
 	}
 	ruleset('rulesets/unused.xml')
 }

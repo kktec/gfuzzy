@@ -2,7 +2,9 @@
 <projectDescription>
 	<name>gfuzzy-examples</name>
 	<comment/>
-	<projects/>
+	<projects>
+		<project>gfuzzy-core</project>
+	</projects>
 	<natures>
 		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>

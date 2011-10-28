@@ -18,7 +18,7 @@ allprojects {
 	}
 	
 	apply plugin: 'code-quality'
-	codeNarcConfigFileName = 'config/codenarc/rules.groovy'
+	codeNarcConfigFileName = '../config/codenarc/rules.groovy'
 	
 	// uses 1.0-milestone-5 deprecated sourceSet.classesDir, should now use output.classesDir
 	apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/ivy/gradle_cobertura/gradle_cobertura/1.0-rc4/coberturainit.gradle'
@@ -37,6 +37,11 @@ allprojects {
 		groovy 'org.codehaus.groovy:groovy:1.7.10'
 		testCompile 'junit:junit:4.8.2'
 	}
+	
+//	test {
+//		scanForTestClasses = false
+//		include '**/Tests*.*'
+//	}
 
 }
 
