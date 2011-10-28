@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/groovy"/>
+	<classpathentry kind="src" path="src/test/groovy"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/asm/asm-analysis/jars/asm-analysis-3.2.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/oro/oro/jars/oro-2.0.8.jar" sourcepath="GRADLE_CACHE/oro/oro/sources/oro-2.0.8-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/org.codehaus.groovy/groovy/jars/groovy-1.7.10.jar" sourcepath="GRADLE_CACHE/org.codehaus.groovy/groovy/sources/groovy-1.7.10-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/asm/asm-tree/jars/asm-tree-3.2.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/org.apache.ant/ant-launcher/jars/ant-launcher-1.7.0.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/log4j/log4j/jars/log4j-1.2.9.jar" sourcepath="GRADLE_CACHE/log4j/log4j/sources/log4j-1.2.9-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/antlr/antlr/jars/antlr-2.7.7.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/asm/asm/jars/asm-3.2.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/net.sourceforge.cobertura/cobertura/jars/cobertura-1.9.4.1.jar" sourcepath="GRADLE_CACHE/net.sourceforge.cobertura/cobertura/sources/cobertura-1.9.4.1-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/asm/asm-util/jars/asm-util-3.2.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/org.apache.ant/ant/jars/ant-1.7.0.jar" sourcepath="GRADLE_CACHE/org.apache.ant/ant/sources/ant-1.7.0-sources.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/asm/asm-commons/jars/asm-commons-3.2.jar"/>
+	<classpathentry exported="true" kind="var" path="GRADLE_CACHE/junit/junit/jars/junit-4.8.2.jar" sourcepath="GRADLE_CACHE/junit/junit/sources/junit-4.8.2-sources.jar"/>
+	<classpathentry exported="true" kind="con" path="com.springsource.sts.gradle.classpathcontainer"/>
+	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
+	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+	<classpathentry kind="output" path="build/classes/main"/>
+</classpath>
