@@ -38,11 +38,6 @@ allprojects {
 		testCompile 'junit:junit:4.8.2'
 	}
 	
-//	test {
-//		scanForTestClasses = false
-//		include '**/Tests*.*'
-//	}
-
 }
 
 
