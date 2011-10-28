@@ -1,21 +1,26 @@
+// use Gradle 1.0-milestone-5
+
 apply plugin: 'groovy'
 
 apply plugin: 'eclipse'
-eclipseClasspath {
-	variables << [ "GRADLE_CACHE" : new File(gradle.getStartParameter().getGradleUserHomeDir(), "cache") ]
-	containers.clear()
-	containers << "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"
+eclipse {		
+	pathVariables "GRADLE_CACHE": file("${gradle.startParameter.gradleUserHomeDir}/cache")
+	classpath {
+		containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"
+	}
 }
 
 apply plugin: 'code-quality'
 codeNarcConfigFileName = 'config/codenarc/rules.groovy'
 
+// uses m5 deprecated sourceSet.classesDir, should now use output.classesDir
 apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/ivy/gradle_cobertura/gradle_cobertura/1.0-rc4/coberturainit.gradle'
 coverageSourceDirs = ['src/main/groovy']
 
 apply plugin: 'project-report'
 
-
+project.sourceCompatibility = 1.6
+sourceCompatibility = 1.6
 
 repositories {
 	mavenCentral()
