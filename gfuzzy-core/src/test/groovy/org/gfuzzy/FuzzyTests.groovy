@@ -37,7 +37,7 @@ class FuzzyTests extends GroovyTestCase {
 	}
 	
 	void test_immutable() {
-		println shouldFail() {fuzzy.fuzzy = 0.75}
+		println shouldFail {fuzzy.fuzzy = 0.75}
 	}
 	
 	void test_as_number() {

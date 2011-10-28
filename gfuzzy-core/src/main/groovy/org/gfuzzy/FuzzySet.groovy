@@ -92,13 +92,13 @@ class FuzzySet {
 
 	Map fuzzify(Number value) {
 		def fuzzies = [:]
-		zones.each() { zone -> fuzzies[zone.name] = zone.fuzzify(value) }
+		zones.each { zone -> fuzzies[zone.name] = zone.fuzzify(value) }
 		fuzzies
 	}
 
 	Map fuzzies() {
 		def fuzzies = [:]
-		zones.each() { zone -> fuzzies[zone.name] = Fuzzy.MIN }
+		zones.each { zone -> fuzzies[zone.name] = Fuzzy.MIN }
 		fuzzies
 	}
 
