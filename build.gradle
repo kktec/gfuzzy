@@ -10,7 +10,7 @@ allprojects {
 	
 	apply plugin: 'eclipse'
 	eclipse {
-		pathVariables 'GRADLE_M5_CACHE': new File("${gradle.startParameter.gradleUserHomeDir}/caches/artifacts-3")
+		pathVariables 'GRADLE_M5_CACHE': file("${gradle.startParameter.gradleUserHomeDir}/caches/artifacts-3")
 		classpath {
 			containers.clear()
 			containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"
