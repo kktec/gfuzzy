@@ -14,9 +14,9 @@ class FuzzyTests extends GroovyTestCase {
 	
 	void test_limits() {
 		assertEquals 0D, MIN_VALUE
-		assertEquals MIN, 0D
+		assertEquals MIN.doubleValue(), 0D
 		assertEquals 1D, MAX_VALUE
-		assertEquals MAX, 1D
+		assertEquals MAX.doubleValue(), 1D
 	}
 
 	void test_construction() {
@@ -90,16 +90,10 @@ class FuzzyTests extends GroovyTestCase {
 	}
 	
 	void test_equals_with_fuzzy() {
-		assertEquals fuzzy, fuzzy.fuzzy
+		assertEquals fuzzy, fuzzy
 		assertFalse fuzzy == new Fuzzy(0.24)
 		assertEquals fuzzy, new Fuzzy(0.25)
 		assertFalse fuzzy == new Fuzzy(0.26)
-	}
-	
-	void test_equals_with_numbers() {
-		assertFalse fuzzy == 0.24
-		assertEquals fuzzy, 0.25
-		assertFalse fuzzy == 0.26
 	}
 	
 	void test_hashcode() {

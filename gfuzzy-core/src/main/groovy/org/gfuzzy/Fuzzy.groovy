@@ -70,13 +70,9 @@ class Fuzzy extends Number {
 	}
 
 	@Override
-	boolean equals(Object obj) {
-		if(obj instanceof Fuzzy) {
-			return fuzzy == obj.fuzzy
-		}
-
-		if(obj instanceof Number) {
-			return fuzzy == obj.doubleValue()
+	boolean equals(Object other) {
+		if(other instanceof Fuzzy) {
+			return fuzzy == other.fuzzy
 		}
 
 		false
