@@ -37,6 +37,10 @@ abstract class FuzzyZone {
 	boolean contains(Number value) {
 		range.containsWithinBounds(value.doubleValue())
 	}
+	
+	Comparable getFrom() { range.from }
+
+	Comparable getTo() { range.to }
 
 	@Override
 	String toString() {

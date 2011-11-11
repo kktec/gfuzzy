@@ -11,6 +11,7 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 	}
 	
 	void test_asymmetric_bipolar_fuzzify() {
+		// FIXME: not asymmetric
 		zone = create(zoneName, -50..150)
 		zone.with {
 			assertEquals zoneName, name
@@ -29,7 +30,6 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 	}
 	
 	void test_symmetric_bipolar_fuzzify() {
-		zone = create(zoneName, -50..50)
 		zone = create(zoneName, -50..50)
 		zone.with {
 			assertEquals 0D, peak
@@ -84,6 +84,7 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 		}
 	}
 	
+	// FIXME: what about bipolar with peak of 0D ?
 	void test_defuzzify() {
 		zone.with {
 			assertEquals(50D, defuzzify(Fuzzy.MAX))
