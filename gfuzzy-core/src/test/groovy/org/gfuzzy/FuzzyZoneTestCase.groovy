@@ -45,7 +45,7 @@ abstract class FuzzyZoneTestCase extends GroovyTestCase {
 	}
 	
 	void test_to_string() {
-		assertEquals "$zone.name($zone.range.from..$zone.range.to)", zone.toString()
+		assertEquals "$zone.name($zone.from..$zone.to)", zone.toString()
 	}
 	
 }

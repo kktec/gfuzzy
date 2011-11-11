@@ -12,13 +12,13 @@ class RisingFuzzyZone extends FuzzyZone {
 
 	void init() {
 		fuzzify = { Number value ->
-			if (value <= range.from) { return Fuzzy.MIN }
-			else if (value >= range.to) { return Fuzzy.MAX }
+			if (value <= from) { return Fuzzy.MIN }
+			else if (value >= to) { return Fuzzy.MAX }
 			
-			new Fuzzy((value - range.from) / (range.to - range.from))
+			new Fuzzy((value - from) / (to - from))
 		}
 
-		defuzzify = { Fuzzy fuzzy -> range.to * fuzzy }
+		defuzzify = { Fuzzy fuzzy -> to * fuzzy }
 	}
 
 }

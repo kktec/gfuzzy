@@ -15,20 +15,20 @@ class RisingFallingFuzzyZone extends FuzzyZone {
 
 	RisingFallingFuzzyZone(String name, Range range, Number peak) {
 		super(name, range)
-		if(!this.range.containsWithinBounds(peak.doubleValue())) {
-			throw new IllegalArgumentException("peak value $peak must be in range ${this.range.from} to ${this.range.to}")
+		if(!range.containsWithinBounds(peak.doubleValue())) {
+			throw new IllegalArgumentException("peak value $peak must be in range ${range.from} to ${range.to}")
 		}
 		this.peak = peak ?: mid()
 	}
 
 	void init() {
 		fuzzify = { Number value ->
-			if (value <= range.from) {return Fuzzy.MIN }
-			else if (value >= range.to) {return Fuzzy.MIN }
+			if (value <= from) {return Fuzzy.MIN }
+			else if (value >= to) {return Fuzzy.MIN }
 			else if (value == peak) { return Fuzzy.MAX }
-			else if (value < peak) { return new Fuzzy((value - range.from) / (peak - range.from)) }
+			else if (value < peak) { return new Fuzzy((value - from) / (peak - from)) }
 			
-			new Fuzzy((value - peak) / (range.to - peak)).not()
+			new Fuzzy((value - peak) / (to - peak)).not()
 		}
 
 		defuzzify = { Fuzzy fuzzy -> peak * fuzzy }
@@ -36,7 +36,7 @@ class RisingFallingFuzzyZone extends FuzzyZone {
 
 	@Override
 	String toString() {
-		"$name($range.from..$peak..$range.to)"
+		"$name($from..$peak..$to)"
 	}
 
 }

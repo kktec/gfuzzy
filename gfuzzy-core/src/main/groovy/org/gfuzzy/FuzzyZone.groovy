@@ -8,7 +8,7 @@ abstract class FuzzyZone {
 
 	final String name
 
-	final Range range
+	private final Range range
 
 	def fuzzify
 
@@ -31,7 +31,7 @@ abstract class FuzzyZone {
 	}
 
 	Number mid() {
-		(range.to - range.from) * 0.5D + range.from
+		(to - from) * 0.5D + from
 	}
 
 	boolean contains(Number value) {
@@ -44,7 +44,7 @@ abstract class FuzzyZone {
 
 	@Override
 	String toString() {
-		"$name($range.from..$range.to)"
+		"$name($from..$to)"
 	}
 
 }

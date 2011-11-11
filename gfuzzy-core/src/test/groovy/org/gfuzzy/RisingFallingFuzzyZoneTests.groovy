@@ -96,7 +96,7 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 	}
 	
 	void test_to_string() {
-		assertEquals "$zone.name($zone.range.from..$zone.peak..$zone.range.to)", zone.toString()
+		assertEquals "$zone.name($zone.from..$zone.peak..$zone.to)", zone.toString()
 	}
 	
 	FuzzyZone create(String name, Range range) {

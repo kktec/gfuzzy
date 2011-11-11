@@ -83,11 +83,11 @@ class FuzzySet {
 	}
 	
 	Number getFrom() {
-		zones[0].range.from
+		zones[0].from
 	}
 
 	Number getTo() {
-		zones[-1].range.to
+		zones[-1].to
 	}
 
 	Map fuzzify(Number value) {
