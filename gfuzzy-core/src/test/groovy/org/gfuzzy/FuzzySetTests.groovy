@@ -25,16 +25,16 @@ class FuzzySetTests extends GroovyTestCase {
 	}
 	
 	void test_range_factory_nameRange_invalid() {
-		println shouldFail(IllegalArgumentException) { createFuzzySetForRanges(null, ["":-10..10]) }
-		println shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", null) }
-		println "yikes " + shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", [:]) }
+		shouldFail(IllegalArgumentException) { createFuzzySetForRanges(null, ["":-10..10]) }
+		shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", null) }
+		shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", [:]) }
 	}
 	
 	void test_peak_factory_namePeak_invalid() {
-		println shouldFail(IllegalArgumentException) { createFuzzySetForPeaks(null, ["":0]) }
-		println shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", null) }
-		println shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", [:]) }
-		println shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", ["":0]) }
+		shouldFail(IllegalArgumentException) { createFuzzySetForPeaks(null, ["":0]) }
+		shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", null) }
+		shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", [:]) }
+		shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", ["":0]) }
 	}
 	
 	void test_range_factory_nameRange_with_1_zone() {
@@ -104,7 +104,7 @@ class FuzzySetTests extends GroovyTestCase {
 	
 	void test_find_zone_getAt_with_5_zones() {
 		def zones = fuzzySet.zones
-		println shouldFail(IllegalArgumentException) { fuzzySet[""] }
+		shouldFail(IllegalArgumentException) { fuzzySet[""] }
 		assertSame zones[0], fuzzySet["NL"]
 		assertSame zones[1], fuzzySet["NS"]
 		assertSame zones[2], fuzzySet["ZE"]
@@ -113,7 +113,7 @@ class FuzzySetTests extends GroovyTestCase {
 	}
 	
 	void test_zone_index_with_5_zones() {
-		println shouldFail(IllegalArgumentException) { fuzzySet.zoneIndex("") }
+		shouldFail(IllegalArgumentException) { fuzzySet.zoneIndex("") }
 		fuzzySet.with {
 			assertEquals 0, zoneIndex("NL")
 			assertEquals 1, zoneIndex("NS")
@@ -146,13 +146,13 @@ class FuzzySetTests extends GroovyTestCase {
 			assertEquals expected[3] , PS
 			assertEquals expected[4] , PL
 		}
-		println "fuzzify($value) = $fuzzies"
+		"fuzzify($value) = $fuzzies"
 	}
 	
 	void assertDefuzzify(Number expected, List values) {
 		def fuzzies = expectedFuzzies(values)
 		Number defuzzify = fuzzySet.defuzzify(fuzzies)
-		println "defuzzify($values) = $defuzzify"
+		"defuzzify($values) = $defuzzify"
 		assertEquals(expected , defuzzify)
 	}
 	

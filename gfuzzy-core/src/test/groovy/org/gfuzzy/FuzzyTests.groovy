@@ -29,15 +29,15 @@ class FuzzyTests extends GroovyTestCase {
 	}
 	
 	void test_invalid_construction() {
-		println shouldFail(IllegalArgumentException) {new Fuzzy(MIN - diff)}
-		println shouldFail(IllegalArgumentException) {new Fuzzy(MAX + diff)}
-		println shouldFail(IllegalArgumentException) {new Fuzzy(null)}
-		println shouldFail(IllegalArgumentException) {new Fuzzy((Number) null)}
-		println shouldFail(ReadOnlyPropertyException) {new Fuzzy("fuzzy":0.5)}
+		shouldFail(IllegalArgumentException) {new Fuzzy(MIN - diff)}
+		shouldFail(IllegalArgumentException) {new Fuzzy(MAX + diff)}
+		shouldFail(IllegalArgumentException) {new Fuzzy(null)}
+		shouldFail(IllegalArgumentException) {new Fuzzy((Number) null)}
+		shouldFail(ReadOnlyPropertyException) {new Fuzzy("fuzzy":0.5)}
 	}
 	
 	void test_immutable() {
-		println shouldFail {fuzzy.fuzzy = 0.75}
+		shouldFail {fuzzy.fuzzy = 0.75}
 	}
 	
 	void test_as_number() {

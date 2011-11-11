@@ -22,8 +22,8 @@ abstract class FuzzyZoneTestCase extends GroovyTestCase {
 		assertEquals zoneName, zone.name
 		assertEquals 100D, zone.from
 		assertEquals 200D, zone.to
-		println shouldFail(IllegalArgumentException) {create(null, 100..200)}
-		println shouldFail(IllegalArgumentException) {create(zoneName, null)}
+		shouldFail(IllegalArgumentException) {create(null, 100..200)}
+		shouldFail(IllegalArgumentException) {create(zoneName, null)}
 	}
 	
 	void test_mid() {
