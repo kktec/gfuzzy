@@ -7,12 +7,11 @@ package org.gfuzzy
 class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 	
 	void test_with_invalid_peak() {
-		println shouldFail(IllegalArgumentException) { new RisingFallingFuzzyZone(zoneName, 0D..10D, 20D) }
+		shouldFail(IllegalArgumentException) { new RisingFallingFuzzyZone(zoneName, 0D..10D, 20D) }
 	}
 	
 	void test_asymmetric_bipolar_fuzzify() {
-		// FIXME: not asymmetric
-		zone = create(zoneName, -50..150)
+		zone = new RisingFallingFuzzyZone(zoneName, -50D..150D, 0)
 		zone.with {
 			assertEquals zoneName, name
 			assertEquals 0D, fuzzify(-50.1)
@@ -84,14 +83,47 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 		}
 	}
 	
-	// FIXME: what about bipolar with peak of 0D ?
-	void test_defuzzify() {
+	void test_symmetric_unipolar_defuzzify() {
+		zone = create(zoneName, 10D..20D)
 		zone.with {
-			assertEquals(50D, defuzzify(Fuzzy.MAX))
-			assertEquals(37.5D, defuzzify(new Fuzzy(0.75)))
-			assertEquals(25D, defuzzify(new Fuzzy(0.5)))
-			assertEquals(12.5D, defuzzify(new Fuzzy(0.25)))
+			assertEquals(15D, defuzzify(Fuzzy.MAX))
+			assertEquals(11.25D, defuzzify(new Fuzzy(0.75)))
+			assertEquals(7.5D, defuzzify(new Fuzzy(0.5)))
+			assertEquals(3.75D, defuzzify(new Fuzzy(0.25)))
 			assertEquals(0D, defuzzify(Fuzzy.MIN))
+		}
+	}
+	
+	void test_asymmetric_unipolar_defuzzify() {
+		zone = new RisingFallingFuzzyZone(zoneName, 10D..20D, 12.5)
+		zone.with {
+			assertEquals(12.5D, defuzzify(Fuzzy.MAX))
+			assertEquals(9.375D, defuzzify(new Fuzzy(0.75)))
+			assertEquals(6.25D, defuzzify(new Fuzzy(0.5)))
+			assertEquals(3.125D, defuzzify(new Fuzzy(0.25)))
+			assertEquals(0D, defuzzify(Fuzzy.MIN))
+		}
+	}
+	
+	void test_symmetric_bipolar_defuzzify() {
+		zone = create(zoneName, -10D..10D)
+		zone.with {
+			assertEquals(0D, defuzzify(Fuzzy.MAX))
+			assertEquals(0D, defuzzify(new Fuzzy(0.75)))
+			assertEquals(0D, defuzzify(new Fuzzy(0.5)))
+			assertEquals(0D, defuzzify(new Fuzzy(0.25)))
+			assertEquals(0D, defuzzify(Fuzzy.MIN))
+		}
+	}
+	
+	void test_asymmetric_bipolar_defuzzify() {
+		zone = new RisingFallingFuzzyZone(zoneName, -10D..10D, -5D)
+		zone.with {
+			assertEquals(-5.0D, defuzzify(Fuzzy.MAX))
+			assertEquals(-3.75D, defuzzify(new Fuzzy(0.75)))
+			assertEquals(-2.5D, defuzzify(new Fuzzy(0.5)))
+			assertEquals(-1.25D, defuzzify(new Fuzzy(0.25)))
+			assertEquals(-0D, defuzzify(Fuzzy.MIN))
 		}
 	}
 	
