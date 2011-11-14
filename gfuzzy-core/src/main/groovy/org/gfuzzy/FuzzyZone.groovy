@@ -8,14 +8,14 @@ abstract class FuzzyZone {
 
 	final String name
 
-	private final Range range
+	protected final Range range
 
 	def fuzzify
 
 	def defuzzify
 
 	abstract protected void init()
-
+	
 	FuzzyZone(String name, Range range) {
 		if(!name) {
 			throw new IllegalArgumentException("name cannot be null")
@@ -45,6 +45,18 @@ abstract class FuzzyZone {
 	@Override
 	String toString() {
 		"$name($from..$to)"
+	}
+	
+	@Override boolean equals(Object that) {
+		if (that.class != this.class) return false
+		if (name != that.name) return false
+		if (from != that.from) return false
+		if (to != that.to) return false
+		true
+	}
+	
+	@Override int hashCode() {
+		name.hashCode()
 	}
 
 }

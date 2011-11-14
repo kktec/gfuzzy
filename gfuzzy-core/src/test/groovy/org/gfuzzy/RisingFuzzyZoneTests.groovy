@@ -25,6 +25,13 @@ class RisingFuzzyZoneTests extends FuzzyZoneTestCase {
 		assertEquals(0D, zone.defuzzify(Fuzzy.MIN))
 	}
 	
+	@Override void test_equals() {
+		super.test_equals()
+		assertFalse create(zoneName, range) == new RisingFuzzyZone(zoneName, range){}
+		assertFalse create(zoneName, range) == new RisingFallingFuzzyZone(zoneName, range)
+		assertFalse create(zoneName, range) == new FallingFuzzyZone(zoneName, range)
+	}
+	
 	FuzzyZone create(String name, Range range) {
 		new RisingFuzzyZone(name, range)
 	}

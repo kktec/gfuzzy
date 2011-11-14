@@ -95,7 +95,7 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 	}
 	
 	void test_asymmetric_unipolar_defuzzify() {
-		zone = new RisingFallingFuzzyZone(zoneName, 10D..20D, 12.5)
+		zone = new RisingFallingFuzzyZone(zoneName, 10D..20D, 12.5D)
 		zone.with {
 			assertEquals(12.5D, defuzzify(Fuzzy.MAX))
 			assertEquals(9.375D, defuzzify(new Fuzzy(0.75)))
@@ -125,6 +125,13 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 			assertEquals(-1.25D, defuzzify(new Fuzzy(0.25)))
 			assertEquals(-0D, defuzzify(Fuzzy.MIN))
 		}
+	}
+	
+	@Override void test_equals() {
+		super.test_equals()
+		assertFalse create(zoneName, range) == new RisingFallingFuzzyZone(zoneName, range){}
+		assertFalse create(zoneName, range) == new FallingFuzzyZone(zoneName, range)
+		assertFalse create(zoneName, range) == new RisingFuzzyZone(zoneName, range)
 	}
 	
 	void test_to_string() {
