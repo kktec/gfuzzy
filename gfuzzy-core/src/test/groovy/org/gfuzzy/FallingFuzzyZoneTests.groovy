@@ -1,7 +1,5 @@
 package org.gfuzzy
 
-import groovy.lang.Range;
-
 /**
  * @author Ken Krebs
  *

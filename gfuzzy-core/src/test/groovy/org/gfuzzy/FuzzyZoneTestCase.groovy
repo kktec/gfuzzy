@@ -1,5 +1,8 @@
 package org.gfuzzy
 
+import static org.gfuzzy.FallingFuzzyZoneTests.*
+import static org.gfuzzy.RisingFuzzyZoneTests.*
+
 /**
  * @author Ken Krebs
  *
@@ -62,9 +65,9 @@ abstract class FuzzyZoneTestCase extends GroovyTestCase {
 	
 	void test_comparable() {
 		assertEquals 0, zone <=> create(zoneName, range)
-		assertEquals 0, FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, range) <=> FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, range)
+		assertEquals 0, createFallingFuzzyZone(zoneName, range) <=> createFallingFuzzyZone(zoneName, range)
 		assertTrue zone > create(zoneName, -51..150) 
-		assertTrue FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, range) > FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, -51..150)
+		assertTrue createFallingFuzzyZone(zoneName, range) > createFallingFuzzyZone(zoneName, -51..150)
 		assertTrue zone > create(zoneName, -50..149) 
 		assertTrue zone < create(zoneName, -49..150) 
 		assertTrue zone < create(zoneName, -50..151)
