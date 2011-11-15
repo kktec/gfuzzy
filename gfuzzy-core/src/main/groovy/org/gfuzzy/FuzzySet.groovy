@@ -17,6 +17,13 @@ class FuzzySet {
 		this.name = name
 	}
 
+	/**
+	 * Creates a new FuzzySet using the specified Map of zone names to peak values. 
+	 * 
+	 * @param name of the FuzzySet
+	 * @param namePeakMap Map<String, Number> to be used to create the FuzzyZones
+	 * @return FuzzySet
+	 */
 	static FuzzySet createFuzzySetForPeaks(String name, Map namePeakMap) {
 		FuzzySet fuzzySet = new FuzzySet(name)
 		if(!namePeakMap) {
@@ -58,6 +65,13 @@ class FuzzySet {
 		fuzzySet
 	}
 
+	/**
+	 * Creates a new FuzzySet using the specified Map of zone names to ranges. 
+	 * 
+	 * @param name of the FuzzySet
+	 * @param nameRangeMap Map<String, Range> to be used to create the FuzzyZones
+	 * @return FuzzySet
+	 */
 	static FuzzySet createFuzzySetForRanges(String name, Map nameRangeMap) {
 		FuzzySet fuzzySet = new FuzzySet(name)
 
