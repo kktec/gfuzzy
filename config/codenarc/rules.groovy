@@ -13,19 +13,19 @@ ruleset {
 	ruleset('rulesets/imports.xml')
 	ruleset('rulesets/jdbc.xml')
 	ruleset('rulesets/junit.xml') {
-		'JUnitStyleAssertions' enabled:false
-		'JUnitSetUpCallsSuper' enabled:false
+		exclude 'JUnitStyleAssertions'
+		exclude 'JUnitSetUpCallsSuper'
 	}
 	ruleset('rulesets/logging.xml')
 	ruleset('rulesets/naming.xml') {
-		'FactoryMethodName' enabled:false
+		'FactoryMethodName' regex: /(build.*|make.*)/
 	}
 	ruleset('rulesets/security.xml')
 	ruleset('rulesets/serialization.xml')
 	ruleset('rulesets/size.xml')
 	ruleset('rulesets/unnecessary.xml') {
-		'UnnecessaryGString' enabled:false
-		'UnnecessaryObjectReferences' enabled:false
+		exclude 'UnnecessaryGString'
+		exclude 'UnnecessaryObjectReferences'
 	}
 	ruleset('rulesets/unused.xml')
 }
