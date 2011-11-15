@@ -27,7 +27,7 @@ class FallingFuzzyZoneTests extends FuzzyZoneTestCase {
 		}
 	}
 	
-	FuzzyZone create(String name, Range range) {
+	protected FuzzyZone create(String name, Range range) {
 		new FallingFuzzyZone(name, range)
 	}
 	

@@ -8,6 +8,8 @@ import org.gfuzzy.*
  */
 class ErrorController {
 
+	static final ZERO = 0D
+	
 	boolean positioner = false
 
 	Range outputRange
@@ -24,9 +26,9 @@ class ErrorController {
 		outputs.NL |= errors.PL
 	}
 
-	double setpoint = 0D
+	double setpoint = ZERO
 
-	double output = 0D
+	double output = ZERO
 
 	double control(double input) {
 		double error = input - setpoint

@@ -12,7 +12,7 @@ abstract class FuzzyZoneTestCase extends GroovyTestCase {
 	
 	FuzzyZone zone
 	
-	abstract FuzzyZone create(String name, Range range)
+	abstract protected FuzzyZone create(String name, Range range)
 	
 	@Override
 	void setUp() {
@@ -61,12 +61,12 @@ abstract class FuzzyZoneTestCase extends GroovyTestCase {
 	}
 	
 	void test_comparable() {
-		assertTrue zone <=> create(zoneName, range) == 0
+		assertEquals 0, zone <=> create(zoneName, range)
 		assertTrue zone > create(zoneName, -51..150) 
 		assertTrue zone > create(zoneName, -50..149) 
 		assertTrue zone < create(zoneName, -49..150) 
 		assertTrue zone < create(zoneName, -50..151)
-//		assertTrue  
+//		assertTrue  canCompare subclasses 
 	}
 	
 }

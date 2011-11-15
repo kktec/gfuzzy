@@ -3,8 +3,8 @@ package org.gfuzzy
 /**
  * @author Ken Krebs
  *
- * Representation of an immutable Fuzzy Logic value as a Double in the range of 0D through 1D. Standard Fuzzy Logic operations
- * are supported such as AND, OR, and NOT.
+ * Representation of an immutable Fuzzy Logic value as a Double in the range of 0D through 1D. 
+ * Standard Fuzzy Logic operations are supported such as AND, OR, and NOT.
  */
 class Fuzzy extends Number {
 
@@ -87,5 +87,4 @@ class Fuzzy extends Number {
 	String toString() {
 		fuzzy.toString()
 	}
-
 }

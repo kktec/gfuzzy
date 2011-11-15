@@ -16,7 +16,7 @@ abstract class FuzzyZone implements Comparable<FuzzyZone> {
 
 	abstract protected void init()
 
-	FuzzyZone(String name, Range range) {
+	protected FuzzyZone(String name, Range range) {
 		if(!name) {
 			throw new IllegalArgumentException("name cannot be null")
 		}
@@ -64,11 +64,8 @@ abstract class FuzzyZone implements Comparable<FuzzyZone> {
 
 	@Override
 	int compareTo(FuzzyZone that) {
-		if (from > that.from) return 1
-		if (to > that.to) return 1
-		if (from < that.from) return -1
-		if (to < that.to) return -1
-		if (name != that.name) return -1 // anything other than 0 - groovy uses this for equals on Comparables
-		0
+		if (from > that.from || to > that.to) { 1 }
+		else if (from < that.from || to < that.to || name != that.name) { -1 }
+		else { 0 }
 	}
 }

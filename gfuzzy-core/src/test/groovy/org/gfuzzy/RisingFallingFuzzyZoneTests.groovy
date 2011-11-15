@@ -131,7 +131,7 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 		assertEquals "$zone.name($zone.from..$zone.peak..$zone.to)", zone.toString()
 	}
 	
-	FuzzyZone create(String name, Range range) {
+	protected FuzzyZone create(String name, Range range) {
 		new RisingFallingFuzzyZone(name, range)
 	}
 	

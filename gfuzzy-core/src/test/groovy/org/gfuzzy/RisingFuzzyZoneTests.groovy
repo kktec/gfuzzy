@@ -25,7 +25,7 @@ class RisingFuzzyZoneTests extends FuzzyZoneTestCase {
 		assertEquals(0D, zone.defuzzify(Fuzzy.MIN))
 	}
 	
-	FuzzyZone create(String name, Range range) {
+	protected FuzzyZone create(String name, Range range) {
 		new RisingFuzzyZone(name, range)
 	}
 	

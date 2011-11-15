@@ -137,7 +137,7 @@ class FuzzySetTests extends GroovyTestCase {
 		assertEquals fuzzySet.zones.toString(), fuzzySet.toString()
 	}
 	
-	void assertFuzzify(Number value, List expected) {
+	protected void assertFuzzify(Number value, List expected) {
 		def fuzzies = fuzzySet.fuzzify(value)
 		fuzzies.with {
 			assertEquals expected[0] , NL
@@ -149,7 +149,7 @@ class FuzzySetTests extends GroovyTestCase {
 		"fuzzify($value) = $fuzzies"
 	}
 	
-	void assertDefuzzify(Number expected, List values) {
+	protected void assertDefuzzify(Number expected, List values) {
 		def fuzzies = expectedFuzzies(values)
 		Number defuzzify = fuzzySet.defuzzify(fuzzies)
 		"defuzzify($values) = $defuzzify"

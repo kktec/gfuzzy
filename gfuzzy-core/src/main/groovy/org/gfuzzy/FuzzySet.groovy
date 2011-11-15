@@ -103,13 +103,14 @@ class FuzzySet {
 	}
 
 	Number defuzzify(def fuzzies) {
-		double dividend = 0d
-		double divisor = 0d
+		final double ZERO = 0D
+		double dividend = ZERO
+		double divisor = ZERO
 		zones.each { zone ->
 			dividend += zone.defuzzify(fuzzies[zone.name])
 			divisor += fuzzies[zone.name]
 		}
-		divisor == 0d ? 0d : dividend / divisor
+		divisor == ZERO ? ZERO : dividend / divisor
 	}
 
 	FuzzyZone getAt(String zoneName) {
