@@ -25,7 +25,6 @@ ruleset {
 	ruleset('rulesets/size.xml')
 	ruleset('rulesets/unnecessary.xml') {
 		exclude 'UnnecessaryGString'
-		exclude 'UnnecessaryObjectReferences'
 	}
 	ruleset('rulesets/unused.xml')
 }
