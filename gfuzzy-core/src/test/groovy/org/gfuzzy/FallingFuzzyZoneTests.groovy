@@ -1,5 +1,7 @@
 package org.gfuzzy
 
+import groovy.lang.Range;
+
 /**
  * @author Ken Krebs
  *
@@ -28,6 +30,10 @@ class FallingFuzzyZoneTests extends FuzzyZoneTestCase {
 	}
 	
 	protected FuzzyZone create(String name, Range range) {
+		createFallingFuzzyZone(name, range)
+	}
+	
+	static FuzzyZone createFallingFuzzyZone(String name, Range range) {
 		new FallingFuzzyZone(name, range)
 	}
 	

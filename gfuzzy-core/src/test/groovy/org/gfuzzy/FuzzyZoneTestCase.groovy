@@ -6,9 +6,9 @@ package org.gfuzzy
  */
 abstract class FuzzyZoneTestCase extends GroovyTestCase {
 	
-	def zoneName = "zone"
+	String zoneName = "zone"
 	
-	def range = -50..150
+	Range range = -50..150
 	
 	FuzzyZone zone
 	
@@ -62,11 +62,12 @@ abstract class FuzzyZoneTestCase extends GroovyTestCase {
 	
 	void test_comparable() {
 		assertEquals 0, zone <=> create(zoneName, range)
+		assertEquals 0, FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, range) <=> FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, range)
 		assertTrue zone > create(zoneName, -51..150) 
+		assertTrue FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, range) > FallingFuzzyZoneTests.createFallingFuzzyZone(zoneName, -51..150)
 		assertTrue zone > create(zoneName, -50..149) 
 		assertTrue zone < create(zoneName, -49..150) 
 		assertTrue zone < create(zoneName, -50..151)
-//		assertTrue  canCompare subclasses 
 	}
 	
 }

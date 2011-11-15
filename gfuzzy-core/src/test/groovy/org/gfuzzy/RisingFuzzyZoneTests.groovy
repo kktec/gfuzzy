@@ -26,6 +26,10 @@ class RisingFuzzyZoneTests extends FuzzyZoneTestCase {
 	}
 	
 	protected FuzzyZone create(String name, Range range) {
+		createRisingFuzzyZone(name, range)
+	}
+	
+	static FuzzyZone createRisingFuzzyZone(String name, Range range) {
 		new RisingFuzzyZone(name, range)
 	}
 	
