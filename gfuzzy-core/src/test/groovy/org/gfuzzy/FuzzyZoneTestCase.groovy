@@ -49,15 +49,24 @@ abstract class FuzzyZoneTestCase extends GroovyTestCase {
 	}
 	
 	void test_equals() {
-		assertEquals create(zoneName, range), create(zoneName, range) 
-		assertFalse create(zoneName, range) == new Object()
-		assertFalse create(zoneName, range) == create("x", range)
-		assertFalse create(zoneName, range) == create(zoneName, 0..150)
-		assertFalse create(zoneName, range) == create(zoneName, -50..100)
+		assertEquals zone, create(zoneName, range) 
+		assertFalse zone == new Object()
+		assertFalse zone == create("x", range)
+		assertFalse zone == create(zoneName, 0..150)
+		assertFalse zone == create(zoneName, -50..100)
 	}
 	
 	void test_hashCode() {
 		assertEquals 3744684, zone.hashCode()
+	}
+	
+	void test_comparable() {
+		assertTrue zone <=> create(zoneName, range) == 0
+		assertTrue zone > create(zoneName, -51..150) 
+		assertTrue zone > create(zoneName, -50..149) 
+		assertTrue zone < create(zoneName, -49..150) 
+		assertTrue zone < create(zoneName, -50..151)
+//		assertTrue  
 	}
 	
 }

@@ -127,13 +127,6 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 		}
 	}
 	
-	@Override void test_equals() {
-		super.test_equals()
-		assertFalse create(zoneName, range) == new RisingFallingFuzzyZone(zoneName, range){}
-		assertFalse create(zoneName, range) == new FallingFuzzyZone(zoneName, range)
-		assertFalse create(zoneName, range) == new RisingFuzzyZone(zoneName, range)
-	}
-	
 	void test_to_string() {
 		assertEquals "$zone.name($zone.from..$zone.peak..$zone.to)", zone.toString()
 	}

@@ -4,7 +4,7 @@ package org.gfuzzy
  * @author Ken Krebs
  *
  */
-abstract class FuzzyZone {
+abstract class FuzzyZone implements Comparable<FuzzyZone> {
 
 	final String name
 
@@ -15,7 +15,7 @@ abstract class FuzzyZone {
 	def defuzzify
 
 	abstract protected void init()
-	
+
 	FuzzyZone(String name, Range range) {
 		if(!name) {
 			throw new IllegalArgumentException("name cannot be null")
@@ -37,26 +37,38 @@ abstract class FuzzyZone {
 	boolean contains(Number value) {
 		range.containsWithinBounds(value.doubleValue())
 	}
-	
-	Comparable getFrom() { range.from }
 
-	Comparable getTo() { range.to }
+	Comparable getFrom() {
+		range.from
+	}
+
+	Comparable getTo() {
+		range.to
+	}
 
 	@Override
 	String toString() {
 		"$name($from..$to)"
 	}
-	
-	@Override boolean equals(Object that) {
-		if (that.class != this.class) return false
-		if (name != that.name) return false
-		if (from != that.from) return false
-		if (to != that.to) return false
-		true
+
+	@Override
+	// NOTE: this never gets called as Groovy uses compareTo
+	boolean equals(Object that) {
+		this <=> that
 	}
-	
-	@Override int hashCode() {
+
+	@Override
+	int hashCode() {
 		name.hashCode()
 	}
 
+	@Override
+	int compareTo(FuzzyZone that) {
+		if (from > that.from) return 1
+		if (to > that.to) return 1
+		if (from < that.from) return -1
+		if (to < that.to) return -1
+		if (name != that.name) return -1 // anything other than 0 - groovy uses this for equals on Comparables
+		0
+	}
 }
