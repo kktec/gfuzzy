@@ -6,7 +6,7 @@ package org.gfuzzy
  */
 class FuzzySet {
 
-	def zones = []
+	private def zones = []
 
 	String name
 
@@ -20,7 +20,7 @@ class FuzzySet {
 	static FuzzySet createFuzzySetForPeaks(String name, Map namePeakMap) {
 		FuzzySet fuzzySet = new FuzzySet(name)
 		if(!namePeakMap) {
-			throw new IllegalArgumentException("namePeakMap cannot be null")
+			throw new IllegalArgumentException("namePeakMap cannot be null or empty")
 		}
 
 		if(namePeakMap.size() < 2) {
@@ -31,10 +31,15 @@ class FuzzySet {
 		namePeakMap.each { from, to ->
 			peakNameMap[to] = from
 		}
-		def peaks = peakNameMap.keySet().toArray()
+		if(peakNameMap.size() != namePeakMap.size()) {
+			throw new RuntimeException('duplicate peaks are not allowed')
+		}
+
+		def peaks = peakNameMap.keySet().toList()
+		peaks.sort()
 
 		def zones = fuzzySet.zones
-		int lastIndex = peaks.length - 1
+		int lastIndex = peaks.size() - 1
 		for (int index in 0..lastIndex) {
 			String rangeName = peakNameMap[peaks[index]]
 			if(index == 0) {
@@ -60,28 +65,26 @@ class FuzzySet {
 			throw new IllegalArgumentException("nameRangeMap cannot be null or empty")
 		}
 
+		def zones = []
 		if(nameRangeMap.size() == 1) {
 			nameRangeMap.each { from, to ->
-				fuzzySet.zones << new RisingFallingFuzzyZone(from, to)
+				zones << new RisingFallingFuzzyZone(from, to)
 			}
 		}
 		else {
 			nameRangeMap.each { from, to ->
-				def zones = fuzzySet.zones
-				if(zones.size == 0) {
-					zones << new FallingFuzzyZone(from, to)
-				}
-				else if (zones.size == nameRangeMap.size() - 1){
-					zones << new RisingFuzzyZone(from, to)
-				}
-				else {
-					zones << new RisingFallingFuzzyZone(from, to)
-				}
+				zones << new RisingFallingFuzzyZone(from, to)
 			}
+			zones.sort()
+			zones[0] = new FallingFuzzyZone(zones[0].name, zones[0].from..zones[0].to)
+			int last = zones.size() - 1
+			zones[last] = new RisingFuzzyZone(zones[last].name, zones[last].from..zones[last].to)
 		}
+		
+		fuzzySet.zones = zones
 		fuzzySet
 	}
-	
+
 	Number getFrom() {
 		zones[0].from
 	}
@@ -92,13 +95,17 @@ class FuzzySet {
 
 	Map fuzzify(Number value) {
 		def fuzzies = [:]
-		zones.each { zone -> fuzzies[zone.name] = zone.fuzzify(value) }
+		zones.each { zone ->
+			fuzzies[zone.name] = zone.fuzzify(value)
+		}
 		fuzzies
 	}
 
 	Map fuzzies() {
 		def fuzzies = [:]
-		zones.each { zone -> fuzzies[zone.name] = Fuzzy.MIN }
+		zones.each { zone ->
+			fuzzies[zone.name] = Fuzzy.MIN
+		}
 		fuzzies
 	}
 
@@ -135,5 +142,4 @@ class FuzzySet {
 	String toString() {
 		zones.toString()
 	}
-
 }
