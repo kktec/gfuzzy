@@ -6,7 +6,7 @@ package org.gfuzzy
  */
 class FuzzySet {
 
-	private def zones = []
+	private zones = []
 
 	String name
 
@@ -32,7 +32,7 @@ class FuzzySet {
 			peakNameMap[to] = from
 		}
 		if(peakNameMap.size() != namePeakMap.size()) {
-			throw new RuntimeException('duplicate peaks are not allowed')
+			throw new IllegalArgumentException('duplicate peaks are not allowed')
 		}
 
 		def peaks = peakNameMap.keySet().toList()

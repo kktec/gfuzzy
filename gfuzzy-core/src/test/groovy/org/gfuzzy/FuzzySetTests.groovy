@@ -24,7 +24,8 @@ class FuzzySetTests extends GroovyTestCase {
 	}
 
 	void test_peak_factory_with_5_zones_and_duplicate_peak() {
-		assertEquals 'duplicate peaks are not allowed', shouldFail { createFuzzySetForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:100]) }
+		assertEquals 'duplicate peaks are not allowed',
+				shouldFail((IllegalArgumentException)) { createFuzzySetForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:100]) }
 	}
 
 	private assert5Zones(FuzzySet fuzzySet) {
@@ -40,16 +41,23 @@ class FuzzySetTests extends GroovyTestCase {
 	}
 
 	void test_range_factory_nameRange_invalid() {
-		assertEquals 'name cannot be null', shouldFail(IllegalArgumentException) { createFuzzySetForRanges(null, ["Z":-10..10]) }
-		assertEquals 'nameRangeMap cannot be null or empty', shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", null) }
-		assertEquals 'nameRangeMap cannot be null or empty', shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", [:]) }
+		assertEquals 'name cannot be null',
+				shouldFail(IllegalArgumentException) { createFuzzySetForRanges(null, ["Z":-10..10]) }
+		assertEquals 'nameRangeMap cannot be null or empty',
+				shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", null) }
+		assertEquals 'nameRangeMap cannot be null or empty',
+				shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", [:]) }
 	}
 
 	void test_peak_factory_namePeak_invalid() {
-		assertEquals 'name cannot be null', shouldFail(IllegalArgumentException) { createFuzzySetForPeaks(null, ["N":-10, "P":10]) }
-		assertEquals 'namePeakMap cannot be null or empty', shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", null) }
-		assertEquals 'namePeakMap cannot be null or empty', shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", [:]) }
-		assertEquals 'namePeakMap must have at least 2 name:Peak', shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", ["Z":0]) }
+		assertEquals 'name cannot be null',
+				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks(null, ["N":-10, "P":10]) }
+		assertEquals 'namePeakMap cannot be null or empty',
+				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", null) }
+		assertEquals 'namePeakMap cannot be null or empty',
+				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", [:]) }
+		assertEquals 'namePeakMap must have at least 2 name:Peak',
+				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", ["Z":0]) }
 	}
 
 	void test_range_factory_nameRange_with_1_zone() {
