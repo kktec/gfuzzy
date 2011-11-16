@@ -52,9 +52,8 @@ abstract class FuzzyZone implements Comparable<FuzzyZone> {
 	}
 
 	@Override
-	// NOTE: this never gets called as Groovy uses compareTo
 	boolean equals(Object that) {
-		this <=> that
+		this <=> that == 0
 	}
 
 	@Override
@@ -64,8 +63,14 @@ abstract class FuzzyZone implements Comparable<FuzzyZone> {
 
 	@Override
 	int compareTo(FuzzyZone that) {
-		if (from > that.from || to > that.to) { 1 }
-		else if (from < that.from || to < that.to || name != that.name) { -1 }
-		else { 0 }
+		if (from > that.from || to > that.to) {
+			1
+		}
+		else if (from < that.from || to < that.to || name != that.name) {
+			-1
+		}
+		else {
+			0
+		}
 	}
 }
