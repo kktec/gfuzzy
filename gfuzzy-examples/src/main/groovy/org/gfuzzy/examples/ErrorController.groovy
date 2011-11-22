@@ -11,13 +11,15 @@ class ErrorController {
 	static final ZERO = 0D
 	
 	boolean positioner = false
+	
+	Range range
 
 	Range outputRange
 
 	FuzzySet errorSet
 
 	FuzzySet outputSet
-
+	
 	def infer = { Map errors, Map outputs ->
 		outputs.PL |= errors.NL
 		outputs.PS |= errors.NS
@@ -29,9 +31,14 @@ class ErrorController {
 	double setpoint = ZERO
 
 	double output = ZERO
+	
+	double input = ZERO
+	
+	double error = ZERO
 
 	double control(double input) {
-		double error = input - setpoint
+		this.input = input
+		error = input - setpoint
 		def errors = errorSet.fuzzify(error)
 		Map outputs = outputSet.fuzzies()
 		infer(errors, outputs)

@@ -6,7 +6,7 @@ package org.gfuzzy
  */
 class FuzzySet {
 
-	private zones = []
+	def zones = []
 
 	String name
 
