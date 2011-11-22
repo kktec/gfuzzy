@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>gfuzzy-examples</name>
+	<name>gfuzzy-swing</name>
 	<comment/>
 	<projects>
 		<project>gfuzzy-core</project>
-		<project>gfuzzy-swing</project>
 	</projects>
 	<natures>
 		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>

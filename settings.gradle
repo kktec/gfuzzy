@@ -1,1 +1,1 @@
-include 'gfuzzy-core', 'gfuzzy-examples'
+include 'gfuzzy-core', 'gfuzzy-examples', 'gfuzzy-swing'
