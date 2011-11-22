@@ -44,7 +44,8 @@ class ErrorControllerUI {
 	JProgressBar outputBar
 	Color outputColor = Color.RED
 	JLabel outputLabel
-
+	JLabel resultLabel
+	
 	JButton updateButton
 	def updateAction = {
 		def output = controller.control(input) * 1.0
@@ -52,6 +53,9 @@ class ErrorControllerUI {
 		outputBar.value = output
 		errorLabel.text = controller.error
 		trendPanel.addSample()
+		errorPanel.update controller.error
+		outputPanel.update controller.result
+		resultLabel.text = controller.result * 1.0
 	}
 
 	ControllerTrendPanel trendPanel
@@ -132,7 +136,7 @@ class ErrorControllerUI {
 						panel(errorPanel,  preferredSize: [300, 200])
 						panel(constraints: BorderLayout.SOUTH) {
 							label(horizontalAlignment: JLabel.CENTER, errorPanel.fuzzySet.name)
-							errorLabel = label('0.0')
+							errorLabel = label("$controller.error")
 						}
 					}
 					hstrut(width: 40)
@@ -140,6 +144,7 @@ class ErrorControllerUI {
 						panel(outputPanel, preferredSize: [300, 200])
 						panel(constraints: BorderLayout.SOUTH) {
 							label(horizontalAlignment: JLabel.CENTER, outputPanel.fuzzySet.name)
+							resultLabel = label("$controller.result")
 						}
 					}
 					hstrut(width: 20)

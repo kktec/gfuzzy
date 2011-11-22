@@ -35,6 +35,8 @@ class ErrorController {
 	double input = ZERO
 	
 	double error = ZERO
+	
+	double result = ZERO
 
 	double control(double input) {
 		this.input = input
@@ -43,7 +45,7 @@ class ErrorController {
 		Map outputs = outputSet.fuzzies()
 		infer(errors, outputs)
 
-		double result = outputSet.defuzzify(outputs)
+		result = outputSet.defuzzify(outputs)
 		if(positioner) {
 			output = result
 		} else {

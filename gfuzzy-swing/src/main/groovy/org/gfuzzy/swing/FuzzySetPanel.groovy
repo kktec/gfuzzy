@@ -19,6 +19,8 @@ class FuzzySetPanel extends JPanel {
 	def FuzzySet fuzzySet
 
 	def sizeInfo
+	
+	double value
 
 	@Override
 	void paint(Graphics g) {
@@ -41,7 +43,23 @@ class FuzzySetPanel extends JPanel {
 		int extraX = width * 0.05
 		g.drawLine sizeInfo.minX - extraX, sizeInfo.minY, sizeInfo.maxX + extraX, sizeInfo.minY
 		g.drawLine sizeInfo.minX - extraX, sizeInfo.maxY, sizeInfo.maxX + extraX, sizeInfo.maxY
-		fuzzySet.zones.each { drawZone(it, g) }
+		fuzzySet.zones.each { 
+			drawZone(it, g)
+		}
+		drawValue(g)
+	}
+	
+	void update(double v) {
+		if(v < fuzzySet.from) {
+			value = fuzzySet.from
+		}
+		else if(v > fuzzySet.to) {
+			value = fuzzySet.to
+		}
+		else {
+			value = v
+		}
+		repaint()
 	}
 
 	Expando createSizeInfo() {
@@ -58,6 +76,13 @@ class FuzzySetPanel extends JPanel {
 		int rangeX = maxX - minX
 		sizeInfo.rangeX = rangeX
 		sizeInfo
+	}
+	
+	void drawValue(Graphics g) {
+		int x = calculateX(value - fuzzySet.from)
+		g.color = new Color(176, 176, 0)
+		g.drawLine x, sizeInfo.minY + 1, x, sizeInfo.maxY - 1
+		
 	}
 
 	void drawZone(FallingFuzzyZone z, Graphics g) {
