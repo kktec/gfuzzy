@@ -8,8 +8,6 @@ import org.gfuzzy.*
  */
 class ErrorController {
 
-	static final ZERO = 0D
-	
 	boolean positioner = false
 	
 	Range range
@@ -28,19 +26,20 @@ class ErrorController {
 		outputs.NL |= errors.PL
 	}
 
-	double setpoint = ZERO
+	double setpoint
 
-	double output = ZERO
+	double output
 	
-	double input = ZERO
+	double input
 	
-	double error = ZERO
+	double error
 	
-	double result = ZERO
+	double result
 
 	double control(double input) {
 		this.input = input
 		error = input - setpoint
+		
 		def errors = errorSet.fuzzify(error)
 		Map outputs = outputSet.fuzzies()
 		infer(errors, outputs)
