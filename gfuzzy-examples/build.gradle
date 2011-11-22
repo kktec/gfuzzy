@@ -1,3 +1,7 @@
+apply plugin: 'application'
+mainClassName = 'org.gfuzzy.examples.swing.ErrorControllerUI'
+
+
 dependencies {
 	compile project(':gfuzzy-core')
 	compile project(':gfuzzy-swing')

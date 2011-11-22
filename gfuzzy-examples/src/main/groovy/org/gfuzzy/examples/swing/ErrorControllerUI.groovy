@@ -101,14 +101,14 @@ class ErrorControllerUI {
 						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildInputSlider() }
 						panel(constraints: BorderLayout.SOUTH) {
 							label("Input:", foreground: inputColor)
-							inputLabel =  label('$input')
+							inputLabel =  label("$input")
 						}
 					}
 					panel(layout: new BorderLayout()) {
 						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildSetpointSlider() }
 						panel(constraints: BorderLayout.SOUTH) {
 							label("Setpoint:", foreground: setpointColor)
-							setpointLabel = label('$controller.setpoint')
+							setpointLabel = label("$controller.setpoint")
 						}
 					}
 					panel(layout: new BorderLayout()) {
@@ -117,7 +117,7 @@ class ErrorControllerUI {
 						}
 						panel(constraints: BorderLayout.SOUTH) {
 							label("Output:", foreground: outputColor)
-							outputLabel = label('$controller.output')
+							outputLabel = label("$controller.output")
 						}
 					}
 				}
@@ -170,7 +170,7 @@ class ErrorControllerUI {
 		}
 
 
-		swing.frame(title: "Fuzzy Controller Demo",
+		swing.frame(title: "gfuzzy Controller Demo",
 				defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
 				location: [100, 200],
 				preferredSize: [1000, 660],
