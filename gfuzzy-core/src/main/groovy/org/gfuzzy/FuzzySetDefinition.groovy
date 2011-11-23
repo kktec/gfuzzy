@@ -24,7 +24,7 @@ class FuzzySetDefinition {
 	 * @param namePeakMap Map<String, Number> to be used to create the FuzzyZones
 	 * @return FuzzySetDefinition
 	 */
-	static FuzzySetDefinition createDefinitionForPeaks(String name, Map namePeakMap) {
+	static FuzzySetDefinition definitionForPeaks(String name, Map namePeakMap) {
 		FuzzySetDefinition fuzzySet = new FuzzySetDefinition(name)
 		if(!namePeakMap) {
 			throw new IllegalArgumentException("namePeakMap cannot be null or empty")
@@ -72,7 +72,7 @@ class FuzzySetDefinition {
 	 * @param nameRangeMap Map<String, Range> to be used to create the FuzzyZones
 	 * @return FuzzySetDefinition
 	 */
-	static FuzzySetDefinition createDefinitionForRanges(String name, Map nameRangeMap) {
+	static FuzzySetDefinition definitionForRanges(String name, Map nameRangeMap) {
 		FuzzySetDefinition fuzzySet = new FuzzySetDefinition(name)
 
 		if(!nameRangeMap) {

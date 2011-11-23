@@ -4,7 +4,7 @@ evaluationDependsOn (':gfuzzy-core')
 
 allprojects {
 	
-	defaultTasks 'build', 'codeNarc'
+	defaultTasks 'build', 'codeNarc', 'javadoc'
 	
 	apply plugin: 'groovy'
 	

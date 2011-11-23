@@ -11,19 +11,20 @@ import com.kktec.fuzzy4g.zone.*
  */
 class FuzzySetDefinitionTests extends GroovyTestCase {
 
-	FuzzySetDefinition fuzzySetDefinition = createDefinitionForRanges("test", [NL:-100..-50, NS:-100..0, ZE:-50..50, PS:0..100, PL:50..100])
+	FuzzySetDefinition fuzzySetDefinition = 
+		definitionForRanges("test", [NL:-100..-50, NS:-100..0, ZE:-50..50, PS:0..100, PL:50..100])
 
 	void test_peak_factory_with_5_zones() {
-		assert5Zones createDefinitionForPeaks("test", [NL:-100, NS:-50, ZE:0, PS:50, PL:100])
+		assert5Zones definitionForPeaks("test", [NL:-100, NS:-50, ZE:0, PS:50, PL:100])
 	}
 
 	void test_peak_factory_with_5_zones_reorders_ascending() {
-		assert5Zones createDefinitionForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:-100])
+		assert5Zones definitionForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:-100])
 	}
 
 	void test_peak_factory_with_5_zones_and_duplicate_peak() {
 		assertEquals 'duplicate peaks are not allowed',
-				shouldFail((IllegalArgumentException)) { createDefinitionForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:100]) }
+			shouldFail((IllegalArgumentException)) { definitionForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:100]) }
 	}
 
 	private assert5Zones(FuzzySetDefinition definition) {
@@ -40,33 +41,33 @@ class FuzzySetDefinitionTests extends GroovyTestCase {
 
 	void test_range_factory_nameRange_invalid() {
 		assertEquals 'name cannot be null',
-				shouldFail(IllegalArgumentException) { createDefinitionForRanges(null, ["Z":-10..10]) }
+			shouldFail(IllegalArgumentException) { definitionForRanges(null, ["Z":-10..10]) }
 		assertEquals 'nameRangeMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createDefinitionForRanges("test", null) }
+			shouldFail(IllegalArgumentException) { definitionForRanges("test", null) }
 		assertEquals 'nameRangeMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createDefinitionForRanges("test", [:]) }
+			shouldFail(IllegalArgumentException) { definitionForRanges("test", [:]) }
 	}
 
 	void test_peak_factory_namePeak_invalid() {
 		assertEquals 'name cannot be null',
-				shouldFail(IllegalArgumentException) { createDefinitionForPeaks(null, ["N":-10, "P":10]) }
+			shouldFail(IllegalArgumentException) { definitionForPeaks(null, ["N":-10, "P":10]) }
 		assertEquals 'namePeakMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createDefinitionForPeaks("test", null) }
+			shouldFail(IllegalArgumentException) { definitionForPeaks("test", null) }
 		assertEquals 'namePeakMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createDefinitionForPeaks("test", [:]) }
+			shouldFail(IllegalArgumentException) { definitionForPeaks("test", [:]) }
 		assertEquals 'namePeakMap must have at least 2 name:Peak',
-				shouldFail(IllegalArgumentException) { createDefinitionForPeaks("test", ["Z":0]) }
+			shouldFail(IllegalArgumentException) { definitionForPeaks("test", ["Z":0]) }
 	}
 
 	void test_range_factory_nameRange_with_1_zone() {
-		fuzzySetDefinition = createDefinitionForRanges("test", [ZE:-10..10])
+		fuzzySetDefinition = definitionForRanges("test", [ZE:-10..10])
 		assertEquals "test", fuzzySetDefinition.name
 		assertTrue fuzzySetDefinition["ZE"] instanceof RisingFallingFuzzyZone
 		assertEquals 1, fuzzySetDefinition.zones.size
 	}
 
 	void test_range_factory_nameRange_with_2_zones() {
-		fuzzySetDefinition = createDefinitionForRanges("test", [N:-10..0, P:0..10])
+		fuzzySetDefinition = definitionForRanges("test", [N:-10..0, P:0..10])
 		assertEquals "test", fuzzySetDefinition.name
 		assertTrue fuzzySetDefinition["N"] instanceof FallingFuzzyZone
 		assertTrue fuzzySetDefinition["P"] instanceof RisingFuzzyZone
@@ -78,7 +79,7 @@ class FuzzySetDefinitionTests extends GroovyTestCase {
 	}
 
 	void test_range_factory_nameRange_with_5_zones_reorders_ascending() {
-		assert5Zones createDefinitionForRanges("test", [PL:50..100, PS:0..100, ZE:-50..50, NS:-100..0, NL:-100..-50])
+		assert5Zones definitionForRanges("test", [PL:50..100, PS:0..100, ZE:-50..50, NS:-100..0, NL:-100..-50])
 	}
 
 	void test_fuzzify_with_5_zones() {

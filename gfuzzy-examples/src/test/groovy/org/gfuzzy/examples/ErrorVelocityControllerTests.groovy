@@ -21,8 +21,8 @@ class ErrorVelocityControllerTests extends GroovyTestCase {
 			setpoint = 50D
 			output = 50D
 	
-			errorSetDefinition = createDefinitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
-			outputSetDefinition = createDefinitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
+			errorSetDefinition = definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
+			outputSetDefinition = definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
 //			inferencer = new Inferencer(inputs: [errorSetDefinition], outputs: [outputSetDefinition]//,
 //				rules: [
 //					new Rule(effect: outputSet['PL'], predicates: [errorSet['NL']]),

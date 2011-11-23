@@ -1,7 +1,5 @@
 package org.gfuzzy.swing
 
-import groovy.util.Expando
-
 import java.awt.Color
 import java.awt.Font
 import java.awt.FontMetrics
@@ -16,7 +14,7 @@ import org.gfuzzy.RisingFuzzyZone
 
 class FuzzySetPanel extends JPanel {
 
-	def FuzzySetDefinition fuzzySetDefinition
+	FuzzySetDefinition fuzzySetDefinition
 
 	def sizeInfo
 	

@@ -4,7 +4,11 @@ ruleset {
 	ruleset('rulesets/concurrency.xml')
 	ruleset('rulesets/convention.xml')
 	ruleset('rulesets/design.xml')
-	ruleset('rulesets/dry.xml')
+	ruleset('rulesets/dry.xml') {
+		exclude 'DuplicateNumberLiteral'
+		exclude 'DuplicateListLiteral'
+		exclude 'DuplicateMapLiteral'
+	}
 	ruleset('rulesets/exceptions.xml')
 	ruleset('rulesets/formatting.xml')
 	ruleset('rulesets/generic.xml')
@@ -18,7 +22,7 @@ ruleset {
 	}
 	ruleset('rulesets/logging.xml')
 	ruleset('rulesets/naming.xml') {
-		'FactoryMethodName' regex: /(build.*|make.*)/
+		exclude 'FactoryMethodName' //regex: /(build.*|make.*)/
 	}
 	ruleset('rulesets/security.xml')
 	ruleset('rulesets/serialization.xml')

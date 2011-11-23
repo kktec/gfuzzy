@@ -20,6 +20,9 @@ import org.gfuzzy.swing.FuzzySetPanel
 // TODO: formatting, range limiting, javadoc
 class ErrorControllerUI {
 
+	def swing = new SwingBuilder()
+	def sampleCount
+		
 	ErrorController controller
 	def input = 0.0
 
@@ -46,7 +49,7 @@ class ErrorControllerUI {
 	Color outputColor = Color.RED
 	JLabel outputLabel
 	JLabel resultLabel
-	
+
 	JButton updateButton
 	def updateAction = {
 		def output = controller.control(input) * 1.0
@@ -63,123 +66,16 @@ class ErrorControllerUI {
 	FuzzySetPanel errorPanel
 	FuzzySetPanel outputPanel
 
-	void buildUi(sampleCount) {
-		errorPanel = new FuzzySetPanel(fuzzySet: controller.errorSetDefinition)
-		outputPanel = new FuzzySetPanel(fuzzySet: controller.outputSetDefinition)
+	void initUi(sampleCount) {
+		this.sampleCount = sampleCount
+		errorPanel = new FuzzySetPanel(fuzzySetDefinition: controller.errorSetDefinition)
+		outputPanel = new FuzzySetPanel(fuzzySetDefinition: controller.outputSetDefinition)
 
-		def swing = new SwingBuilder()
-		def lafs = UIManager.getInstalledLookAndFeels()
-		def nimbus = lafs.find {
-			it.name == 'Nimbus'
-		}
+		def lafs = UIManager.installedLookAndFeels
+		def nimbus = lafs.find { it.name == 'Nimbus' }
 		if (nimbus) {
 			swing.lookAndFeel('nimbus')
 		}
-
-		def buildHeaderPanel = {
-			swing.panel() {
-				label(font: new Font('Arial', Font.BOLD, 32), 'Error Velocity Controller')
-			}
-		}
-
-		def buildInputSlider = {
-			inputSlider = swing.slider(orientation: JSlider.VERTICAL)
-			inputSlider.with {
-				value = 0
-				majorTickSpacing = 10
-				paintTicks = true
-				paintLabels = true
-				stateChanged = inputChanged
-			}
-		}
-
-		def buildSetpointSlider = {
-			setpointSlider = swing.slider(orientation: JSlider.VERTICAL)
-			setpointSlider.with {
-				value = controller.setpoint
-				majorTickSpacing = 10
-				paintTicks = true
-				paintLabels = true
-				stateChanged = setpointChanged
-			}
-		}
-
-		def buildWidgetsPanel = {
-			swing.panel(layout: new BorderLayout()) {
-				panel(constraints: BorderLayout.WEST) {
-					panel(layout: new BorderLayout()) {
-						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildInputSlider() }
-						panel(constraints: BorderLayout.SOUTH) {
-							label("Input:", foreground: inputColor)
-							inputLabel =  label("$input")
-						}
-					}
-					panel(layout: new BorderLayout()) {
-						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildSetpointSlider() }
-						panel(constraints: BorderLayout.SOUTH) {
-							label("Setpoint:", foreground: setpointColor)
-							setpointLabel = label("$controller.setpoint")
-						}
-					}
-					panel(layout: new BorderLayout()) {
-						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) {
-							outputBar = progressBar(orientation: JProgressBar.VERTICAL, foreground: outputColor, preferredSize: [0, 200])
-						}
-						panel(constraints: BorderLayout.SOUTH) {
-							label("Output:", foreground: outputColor)
-							outputLabel = label("$controller.output")
-						}
-					}
-				}
-			}
-		}
-
-		def buildFuzzySetPanel = {
-			swing.panel() {
-				hbox() {
-					hstrut(width: 20)
-					panel(layout: new BorderLayout()) {
-						panel(errorPanel,  preferredSize: [300, 200])
-						panel(constraints: BorderLayout.SOUTH) {
-							label(horizontalAlignment: JLabel.CENTER, errorPanel.fuzzySetDefinition.name)
-							errorLabel = label("$controller.error")
-						}
-					}
-					hstrut(width: 40)
-					panel(layout: new BorderLayout()) {
-						panel(outputPanel, preferredSize: [300, 200])
-						panel(constraints: BorderLayout.SOUTH) {
-							label(horizontalAlignment: JLabel.CENTER, outputPanel.fuzzySetDefinition.name)
-							resultLabel = label("$controller.result")
-						}
-					}
-					hstrut(width: 20)
-				}
-			}
-		}
-
-		def buildControlsPanel = {
-			swing.panel() {
-				hbox() {
-					hstrut(width: 20)
-					buildWidgetsPanel()
-					hstrut(width: 40)
-					panel(layout: new BorderLayout()) {
-						trendPanel = panel(new ControllerTrendPanel(controller: controller, 
-							colors: [inputColor: inputColor, setpointColor: setpointColor, outputColor: outputColor],
-							sampleCount: sampleCount), preferredSize: [sampleCount + 2, 202])
-					}
-					hstrut(width: 20)
-				}
-			}
-		}
-
-		def buildButtonPanel = {
-			swing.panel(constraints: BorderLayout.SOUTH) {
-				updateButton = button(actionPerformed: updateAction, "Update Controller")
-			}
-		}
-
 
 		swing.frame(title: "gfuzzy Controller Demo",
 				defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
@@ -187,8 +83,8 @@ class ErrorControllerUI {
 				preferredSize: [1000, 660],
 				pack:true, show:true) {
 					scrollPane {
-						panel() {
-							vbox() {
+						panel {
+							vbox {
 								buildHeaderPanel()
 								vstrut()
 								buildControlsPanel()
@@ -202,11 +98,116 @@ class ErrorControllerUI {
 				}
 	}
 
+	def buildHeaderPanel = {
+		swing.panel {
+			label(font: new Font('Arial', Font.BOLD, 32), 'Error Velocity Controller')
+		}
+	}
+
+	def buildInputSlider = {
+		inputSlider = swing.slider(orientation: JSlider.VERTICAL)
+		inputSlider.with {
+			value = 0
+			majorTickSpacing = 10
+			paintTicks = true
+			paintLabels = true
+			stateChanged = inputChanged
+		}
+	}
+
+	def buildSetpointSlider = {
+		setpointSlider = swing.slider(orientation: JSlider.VERTICAL)
+		setpointSlider.with {
+			value = controller.setpoint
+			majorTickSpacing = 10
+			paintTicks = true
+			paintLabels = true
+			stateChanged = setpointChanged
+		}
+	}
+
+	def buildWidgetsPanel = {
+		swing.panel(layout: new BorderLayout()) {
+			panel(constraints: BorderLayout.WEST) {
+				panel(layout: new BorderLayout()) {
+					panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildInputSlider() }
+					panel(constraints: BorderLayout.SOUTH) {
+						label("Input:", foreground: inputColor)
+						inputLabel =  label("$input")
+					}
+				}
+				panel(layout: new BorderLayout()) {
+					panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildSetpointSlider() }
+					panel(constraints: BorderLayout.SOUTH) {
+						label("Setpoint:", foreground: setpointColor)
+						setpointLabel = label("$controller.setpoint")
+					}
+				}
+				panel(layout: new BorderLayout()) {
+					panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) {
+						outputBar = progressBar(orientation: JProgressBar.VERTICAL, foreground: outputColor, preferredSize: [0, 200])
+					}
+					panel(constraints: BorderLayout.SOUTH) {
+						label("Output:", foreground: outputColor)
+						outputLabel = label("$controller.output")
+					}
+				}
+			}
+		}
+	}
+
+	def buildFuzzySetPanel = {
+		swing.panel {
+			hbox {
+				hstrut(width: 20)
+				panel(layout: new BorderLayout()) {
+					panel(errorPanel,  preferredSize: [300, 200])
+					panel(constraints: BorderLayout.SOUTH) {
+						label(horizontalAlignment: JLabel.CENTER, errorPanel.fuzzySetDefinition.name)
+						errorLabel = label("$controller.error")
+					}
+				}
+				hstrut(width: 40)
+				panel(layout: new BorderLayout()) {
+					panel(outputPanel, preferredSize: [300, 200])
+					panel(constraints: BorderLayout.SOUTH) {
+						label(horizontalAlignment: JLabel.CENTER, outputPanel.fuzzySetDefinition.name)
+						resultLabel = label("$controller.result")
+					}
+				}
+				hstrut(width: 20)
+			}
+		}
+	}
+
+	def buildControlsPanel = {
+		swing.panel {
+			hbox {
+				hstrut(width: 20)
+				buildWidgetsPanel()
+				hstrut(width: 40)
+				panel(layout: new BorderLayout()) {
+					trendPanel = panel(new ControllerTrendPanel(controller: controller,
+							colors: [inputColor: inputColor, setpointColor: setpointColor, outputColor: outputColor],
+							sampleCount: sampleCount), preferredSize: [sampleCount + 2, 202])
+				}
+				hstrut(width: 20)
+			}
+		}
+	}
+
+	def buildButtonPanel = {
+		swing.panel(constraints: BorderLayout.SOUTH) {
+			updateButton = button(actionPerformed: updateAction, "Update Controller")
+		}
+	}
+
+
 	static void main(String[] args) {
 		ErrorController controller = new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
-				errorSet: FuzzySetDefinition.createDefinitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
-				outputSet: FuzzySetDefinition.createDefinitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
+			errorSetDefinition: FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
+			outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
 
-		new ErrorControllerUI(controller: controller).buildUi(500)
+		new ErrorControllerUI(controller: controller).initUi(500)
 	}
 }

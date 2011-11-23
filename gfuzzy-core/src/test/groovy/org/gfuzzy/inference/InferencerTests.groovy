@@ -7,8 +7,8 @@ import org.gfuzzy.FuzzySetDefinition
 
 class InferencerTests extends GroovyTestCase {
 
-	FuzzySetDefinition inputSet = createDefinitionForPeaks("input", [N:-5, Z:0, P:5])
-	FuzzySetDefinition outputSet = createDefinitionForPeaks("output", [N:-2.5, Z:0, P:2.5])
+	FuzzySetDefinition inputSet = definitionForPeaks("input", [N:-5, Z:0, P:5])
+	FuzzySetDefinition outputSet = definitionForPeaks("output", [N:-2.5, Z:0, P:2.5])
 	
 	Inferencer inferencer = new Inferencer()
 	
