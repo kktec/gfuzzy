@@ -30,17 +30,17 @@ class ErrorControllerUI {
 	Color inputColor = new Color(0, 150, 0)
 	JLabel inputLabel
 	def inputChanged = {
-		input = inputSlider.value * 1.0
-		inputLabel.text = input
+		input = inputSlider.value
+		inputLabel.text = input * 1.0
 	}
 
 	JSlider setpointSlider
 	Color setpointColor = Color.BLUE
 	JLabel setpointLabel
 	def setpointChanged = {
-		def setpoint = setpointSlider.value * 1.0
+		def setpoint = setpointSlider.value
 		controller.setpoint = setpoint
-		setpointLabel.text = setpoint
+		setpointLabel.text = setpoint * 1.0
 	}
 
 	JLabel errorLabel
@@ -52,8 +52,8 @@ class ErrorControllerUI {
 
 	JButton updateButton
 	def updateAction = {
-		def output = controller.control(input) * 1.0
-		outputLabel.text = output
+		def output = controller.control(input)
+		outputLabel.text = output * 1.0
 		outputBar.value = output
 		errorLabel.text = controller.error
 		trendPanel.addSample()
@@ -66,8 +66,7 @@ class ErrorControllerUI {
 	FuzzySetPanel errorPanel
 	FuzzySetPanel outputPanel
 
-	void initUi(sampleCount) {
-		this.sampleCount = sampleCount
+	void init() {
 		errorPanel = new FuzzySetPanel(fuzzySetDefinition: controller.errorSetDefinition)
 		outputPanel = new FuzzySetPanel(fuzzySetDefinition: controller.outputSetDefinition)
 
@@ -208,6 +207,6 @@ class ErrorControllerUI {
 			errorSetDefinition: FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
 			outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
 
-		new ErrorControllerUI(controller: controller).initUi(500)
+		new ErrorControllerUI(controller: controller, sampleCount: 500).init()
 	}
 }

@@ -24,23 +24,20 @@ class FuzzySetPanel extends JPanel {
 	void paint(Graphics g) {
 		super.paint g
 
-		JPanel p = new JPanel()
-		g.color = p.background
+		g.color = new JPanel().background
 		int w = width - 1
 		int h = height - 1
 		g.fillRect(x, y, w, h)
 		g.color = Color.BLACK
 		g.drawRect(x, y, w, h)
-
+		
 		sizeInfo = createSizeInfo()
-
-		int textHeight = sizeInfo.minY / 3
-		Font font =  new Font('Arial', Font.BOLD, textHeight)
-		g.font = font
-
 		int extraX = width * 0.05
-		g.drawLine sizeInfo.minX - extraX, sizeInfo.minY, sizeInfo.maxX + extraX, sizeInfo.minY
-		g.drawLine sizeInfo.minX - extraX, sizeInfo.maxY, sizeInfo.maxX + extraX, sizeInfo.maxY
+		sizeInfo.with {
+		g.font = new Font('Arial', Font.BOLD, minY / 3)
+			g.drawLine minX - extraX, minY, maxX + extraX, minY
+			g.drawLine minX - extraX, maxY, maxX + extraX, maxY
+		}
 		fuzzySetDefinition.zones.each { 
 			drawZone(it, g)
 		}
@@ -48,14 +45,16 @@ class FuzzySetPanel extends JPanel {
 	}
 	
 	void update(double v) {
-		if(v < fuzzySetDefinition.from) {
-			value = fuzzySetDefinition.from
-		}
-		else if(v > fuzzySetDefinition.to) {
-			value = fuzzySetDefinition.to
-		}
-		else {
-			value = v
+		fuzzySetDefinition.with {
+			if(v < from) {
+				value = from
+			}
+			else if(v > to) {
+				value = to
+			}
+			else {
+				value = v
+			}
 		}
 		repaint()
 	}

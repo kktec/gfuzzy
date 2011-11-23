@@ -11,16 +11,18 @@ class ControllerTrendPanel extends JPanel {
 
 	ErrorController controller
 	
-	def colors
+	Map<String, Color> colors
 
-	def sampleCount
+	int sampleCount
 
 	def samples = []
 
 	int currentSample = 0
 
 	void addSample() {
-		samples << new Expando(input: controller.input, setpoint: controller.setpoint, output: controller.output)
+		controller.with {
+			samples << new Expando(input: input, setpoint: setpoint, output: output)
+		}
 		currentSample++
 		repaint()
 	}
