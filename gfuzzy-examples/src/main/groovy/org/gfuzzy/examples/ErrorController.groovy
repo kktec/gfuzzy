@@ -18,7 +18,7 @@ class ErrorController {
 
 	FuzzySet outputSet
 	
-	def infer = { Map errors, Map outputs ->
+	def infer = { errors, outputs ->
 		outputs.PL |= errors.NL
 		outputs.PS |= errors.NS
 		outputs.ZE |= errors.ZE
@@ -41,7 +41,7 @@ class ErrorController {
 		error = input - setpoint
 		
 		def errors = errorSet.fuzzify(error)
-		Map outputs = outputSet.fuzzies()
+		def outputs = outputSet.fuzzies()
 		infer(errors, outputs)
 
 		result = outputSet.defuzzify(outputs)
