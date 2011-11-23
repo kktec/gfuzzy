@@ -1,6 +1,6 @@
 package org.gfuzzy
 
-import static org.gfuzzy.FuzzySet.*
+import static org.gfuzzy.FuzzySetDefinition.*
 import static org.gfuzzy.Fuzzy.*
 
 import com.kktec.fuzzy4g.zone.*
@@ -9,79 +9,76 @@ import com.kktec.fuzzy4g.zone.*
  * @author Ken Krebs
  *
  */
-class FuzzySetTests extends GroovyTestCase {
+class FuzzySetDefinitionTests extends GroovyTestCase {
 
-	FuzzySet fuzzySet = createFuzzySetForRanges("test", [NL:-100..-50, NS:-100..0, ZE:-50..50, PS:0..100, PL:50..100])
+	FuzzySetDefinition fuzzySetDefinition = createDefinitionForRanges("test", [NL:-100..-50, NS:-100..0, ZE:-50..50, PS:0..100, PL:50..100])
 
 	void test_peak_factory_with_5_zones() {
-		FuzzySet fuzzySet = createFuzzySetForPeaks("test", [NL:-100, NS:-50, ZE:0, PS:50, PL:100])
-		assert5Zones(fuzzySet)
+		assert5Zones createDefinitionForPeaks("test", [NL:-100, NS:-50, ZE:0, PS:50, PL:100])
 	}
 
 	void test_peak_factory_with_5_zones_reorders_ascending() {
-		FuzzySet fuzzySet = createFuzzySetForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:-100])
-		assert5Zones(fuzzySet)
+		assert5Zones createDefinitionForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:-100])
 	}
 
 	void test_peak_factory_with_5_zones_and_duplicate_peak() {
 		assertEquals 'duplicate peaks are not allowed',
-				shouldFail((IllegalArgumentException)) { createFuzzySetForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:100]) }
+				shouldFail((IllegalArgumentException)) { createDefinitionForPeaks("test", [PL:100, PS:50, ZE:0, NS:-50, NL:100]) }
 	}
 
-	private assert5Zones(FuzzySet fuzzySet) {
-		assertEquals "test", fuzzySet.name
-		assertTrue fuzzySet["NL"] instanceof FallingFuzzyZone
-		assertTrue fuzzySet["NS"] instanceof RisingFallingFuzzyZone
-		assertTrue fuzzySet["ZE"] instanceof RisingFallingFuzzyZone
-		assertTrue fuzzySet["PS"] instanceof RisingFallingFuzzyZone
-		assertTrue fuzzySet["PL"] instanceof RisingFuzzyZone
-		assertEquals 5, fuzzySet.zones.size
-		assertEquals (-100, fuzzySet.from)
-		assertEquals 100, fuzzySet.to
+	private assert5Zones(FuzzySetDefinition definition) {
+		assertEquals "test", definition.name
+		assertTrue definition["NL"] instanceof FallingFuzzyZone
+		assertTrue definition["NS"] instanceof RisingFallingFuzzyZone
+		assertTrue definition["ZE"] instanceof RisingFallingFuzzyZone
+		assertTrue definition["PS"] instanceof RisingFallingFuzzyZone
+		assertTrue definition["PL"] instanceof RisingFuzzyZone
+		assertEquals 5, definition.zones.size
+		assertEquals (-100, definition.from)
+		assertEquals 100, definition.to
 	}
 
 	void test_range_factory_nameRange_invalid() {
 		assertEquals 'name cannot be null',
-				shouldFail(IllegalArgumentException) { createFuzzySetForRanges(null, ["Z":-10..10]) }
+				shouldFail(IllegalArgumentException) { createDefinitionForRanges(null, ["Z":-10..10]) }
 		assertEquals 'nameRangeMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", null) }
+				shouldFail(IllegalArgumentException) { createDefinitionForRanges("test", null) }
 		assertEquals 'nameRangeMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createFuzzySetForRanges("test", [:]) }
+				shouldFail(IllegalArgumentException) { createDefinitionForRanges("test", [:]) }
 	}
 
 	void test_peak_factory_namePeak_invalid() {
 		assertEquals 'name cannot be null',
-				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks(null, ["N":-10, "P":10]) }
+				shouldFail(IllegalArgumentException) { createDefinitionForPeaks(null, ["N":-10, "P":10]) }
 		assertEquals 'namePeakMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", null) }
+				shouldFail(IllegalArgumentException) { createDefinitionForPeaks("test", null) }
 		assertEquals 'namePeakMap cannot be null or empty',
-				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", [:]) }
+				shouldFail(IllegalArgumentException) { createDefinitionForPeaks("test", [:]) }
 		assertEquals 'namePeakMap must have at least 2 name:Peak',
-				shouldFail(IllegalArgumentException) { createFuzzySetForPeaks("test", ["Z":0]) }
+				shouldFail(IllegalArgumentException) { createDefinitionForPeaks("test", ["Z":0]) }
 	}
 
 	void test_range_factory_nameRange_with_1_zone() {
-		fuzzySet = createFuzzySetForRanges("test", [ZE:-10..10])
-		assertEquals "test", fuzzySet.name
-		assertTrue fuzzySet["ZE"] instanceof RisingFallingFuzzyZone
-		assertEquals 1, fuzzySet.zones.size
+		fuzzySetDefinition = createDefinitionForRanges("test", [ZE:-10..10])
+		assertEquals "test", fuzzySetDefinition.name
+		assertTrue fuzzySetDefinition["ZE"] instanceof RisingFallingFuzzyZone
+		assertEquals 1, fuzzySetDefinition.zones.size
 	}
 
 	void test_range_factory_nameRange_with_2_zones() {
-		fuzzySet = createFuzzySetForRanges("test", [N:-10..0, P:0..10])
-		assertEquals "test", fuzzySet.name
-		assertTrue fuzzySet["N"] instanceof FallingFuzzyZone
-		assertTrue fuzzySet["P"] instanceof RisingFuzzyZone
-		assertEquals 2, fuzzySet.zones.size
+		fuzzySetDefinition = createDefinitionForRanges("test", [N:-10..0, P:0..10])
+		assertEquals "test", fuzzySetDefinition.name
+		assertTrue fuzzySetDefinition["N"] instanceof FallingFuzzyZone
+		assertTrue fuzzySetDefinition["P"] instanceof RisingFuzzyZone
+		assertEquals 2, fuzzySetDefinition.zones.size
 	}
 
 	void test_range_factory_nameRange_with_5_zones() {
-		assert5Zones(fuzzySet)
+		assert5Zones fuzzySetDefinition
 	}
 
 	void test_range_factory_nameRange_with_5_zones_reorders_ascending() {
-		fuzzySet = createFuzzySetForRanges("test", [PL:50..100, PS:0..100, ZE:-50..50, NS:-100..0, NL:-100..-50])
-		assert5Zones(fuzzySet)
+		assert5Zones createDefinitionForRanges("test", [PL:50..100, PS:0..100, ZE:-50..50, NS:-100..0, NL:-100..-50])
 	}
 
 	void test_fuzzify_with_5_zones() {
@@ -116,25 +113,25 @@ class FuzzySetTests extends GroovyTestCase {
 
 	void test_fuzzify_defuzzify_with_5_zones() {
 		for(value in (-100d..100d).step(10)) {
-			def fuzzify = fuzzySet.fuzzify(value)
-			def defuzzify = fuzzySet.defuzzify(fuzzify)
+			def fuzzify = fuzzySetDefinition.fuzzify(value)
+			def defuzzify = fuzzySetDefinition.defuzzify(fuzzify)
 			assertEquals value, defuzzify, 0.0001d
 		}
 	}
 
 	void test_find_zone_getAt_with_5_zones() {
-		def zones = fuzzySet.zones
-		shouldFail(IllegalArgumentException) { fuzzySet[""] }
-		assertSame zones[0], fuzzySet["NL"]
-		assertSame zones[1], fuzzySet["NS"]
-		assertSame zones[2], fuzzySet["ZE"]
-		assertSame zones[3], fuzzySet["PS"]
-		assertSame zones[4], fuzzySet["PL"]
+		def zones = fuzzySetDefinition.zones
+		shouldFail(IllegalArgumentException) { fuzzySetDefinition[""] }
+		assertSame zones[0], fuzzySetDefinition["NL"]
+		assertSame zones[1], fuzzySetDefinition["NS"]
+		assertSame zones[2], fuzzySetDefinition["ZE"]
+		assertSame zones[3], fuzzySetDefinition["PS"]
+		assertSame zones[4], fuzzySetDefinition["PL"]
 	}
 
 	void test_zone_index_with_5_zones() {
-		assertEquals 'could not find zone xxx', shouldFail(IllegalArgumentException) { fuzzySet.zoneIndex("xxx") }
-		fuzzySet.with {
+		assertEquals 'could not find zone xxx', shouldFail(IllegalArgumentException) { fuzzySetDefinition.zoneIndex("xxx") }
+		fuzzySetDefinition.with {
 			assertEquals 0, zoneIndex("NL")
 			assertEquals 1, zoneIndex("NS")
 			assertEquals 2, zoneIndex("ZE")
@@ -144,7 +141,7 @@ class FuzzySetTests extends GroovyTestCase {
 	}
 
 	void test_fuzzies_with_5_zones() {
-		fuzzySet.fuzzies().with {
+		fuzzySetDefinition.fuzzies().with {
 			assertEquals MIN, NL
 			assertEquals MIN, NS
 			assertEquals MIN, ZE
@@ -154,11 +151,11 @@ class FuzzySetTests extends GroovyTestCase {
 	}
 
 	void test_to_string() {
-		assertEquals fuzzySet.zones.toString(), fuzzySet.toString()
+		assertEquals fuzzySetDefinition.zones.toString(), fuzzySetDefinition.toString()
 	}
 
 	protected void assertFuzzify(Number value, List expected) {
-		def fuzzies = fuzzySet.fuzzify(value)
+		def fuzzies = fuzzySetDefinition.fuzzify(value)
 		fuzzies.with {
 			assertEquals expected[0] , NL
 			assertEquals expected[1] , NS
@@ -171,7 +168,7 @@ class FuzzySetTests extends GroovyTestCase {
 
 	protected void assertDefuzzify(Number expected, List values) {
 		def fuzzies = expectedFuzzies(values)
-		Number defuzzify = fuzzySet.defuzzify(fuzzies)
+		Number defuzzify = fuzzySetDefinition.defuzzify(fuzzies)
 		"defuzzify($values) = $defuzzify"
 		assertEquals(expected , defuzzify)
 	}

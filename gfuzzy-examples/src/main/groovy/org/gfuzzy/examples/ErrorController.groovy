@@ -14,9 +14,9 @@ class ErrorController {
 
 	Range outputRange
 
-	FuzzySet errorSet
+	FuzzySetDefinition errorSetDefinition
 
-	FuzzySet outputSet
+	FuzzySetDefinition outputSetDefinition
 	
 	def infer = { errors, outputs ->
 		outputs.PL |= errors.NL
@@ -40,11 +40,11 @@ class ErrorController {
 		this.input = input
 		error = input - setpoint
 		
-		def errors = errorSet.fuzzify(error)
-		def outputs = outputSet.fuzzies()
+		def errors = errorSetDefinition.fuzzify(error)
+		def outputs = outputSetDefinition.fuzzies()
 		infer(errors, outputs)
 
-		result = outputSet.defuzzify(outputs)
+		result = outputSetDefinition.defuzzify(outputs)
 		if(positioner) {
 			output = result
 		} else {

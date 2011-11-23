@@ -1,8 +1,9 @@
 package org.gfuzzy.examples
 
-import static org.gfuzzy.FuzzySet.*
+import static org.gfuzzy.FuzzySetDefinition.*
 
 import org.gfuzzy.*
+import org.gfuzzy.inference.Inferencer
 import org.gfuzzy.zone.*
 
 /**
@@ -20,8 +21,17 @@ class ErrorVelocityControllerTests extends GroovyTestCase {
 			setpoint = 50D
 			output = 50D
 	
-			errorSet = createFuzzySetForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
-			outputSet = createFuzzySetForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
+			errorSetDefinition = createDefinitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
+			outputSetDefinition = createDefinitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
+//			inferencer = new Inferencer(inputs: [errorSetDefinition], outputs: [outputSetDefinition]//,
+//				rules: [
+//					new Rule(effect: outputSet['PL'], predicates: [errorSet['NL']]),
+//					new Rule(effect: outputSet['SL'], predicates: [errorSet['NS']]),
+//					new Rule(effect: outputSet['ZE'], predicates: [errorSet['ZE']]),
+//					new Rule(effect: outputSet['NS'], predicates: [errorSet['PS']]),
+//					new Rule(effect: outputSet['NL'], predicates: [errorSet['PL']])
+//				]
+//			)
 		}
 	}
 

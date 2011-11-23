@@ -13,7 +13,7 @@ import javax.swing.JSlider
 import javax.swing.UIManager
 import javax.swing.WindowConstants
 
-import org.gfuzzy.FuzzySet
+import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.examples.ErrorController
 import org.gfuzzy.swing.FuzzySetPanel
 
@@ -64,8 +64,8 @@ class ErrorControllerUI {
 	FuzzySetPanel outputPanel
 
 	void buildUi(sampleCount) {
-		errorPanel = new FuzzySetPanel(fuzzySet: controller.errorSet)
-		outputPanel = new FuzzySetPanel(fuzzySet: controller.outputSet)
+		errorPanel = new FuzzySetPanel(fuzzySet: controller.errorSetDefinition)
+		outputPanel = new FuzzySetPanel(fuzzySet: controller.outputSetDefinition)
 
 		def swing = new SwingBuilder()
 		def lafs = UIManager.getInstalledLookAndFeels()
@@ -141,7 +141,7 @@ class ErrorControllerUI {
 					panel(layout: new BorderLayout()) {
 						panel(errorPanel,  preferredSize: [300, 200])
 						panel(constraints: BorderLayout.SOUTH) {
-							label(horizontalAlignment: JLabel.CENTER, errorPanel.fuzzySet.name)
+							label(horizontalAlignment: JLabel.CENTER, errorPanel.fuzzySetDefinition.name)
 							errorLabel = label("$controller.error")
 						}
 					}
@@ -149,7 +149,7 @@ class ErrorControllerUI {
 					panel(layout: new BorderLayout()) {
 						panel(outputPanel, preferredSize: [300, 200])
 						panel(constraints: BorderLayout.SOUTH) {
-							label(horizontalAlignment: JLabel.CENTER, outputPanel.fuzzySet.name)
+							label(horizontalAlignment: JLabel.CENTER, outputPanel.fuzzySetDefinition.name)
 							resultLabel = label("$controller.result")
 						}
 					}
@@ -204,8 +204,8 @@ class ErrorControllerUI {
 
 	static void main(String[] args) {
 		ErrorController controller = new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
-				errorSet: FuzzySet.createFuzzySetForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
-				outputSet: FuzzySet.createFuzzySetForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
+				errorSet: FuzzySetDefinition.createDefinitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
+				outputSet: FuzzySetDefinition.createDefinitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
 
 		new ErrorControllerUI(controller: controller).buildUi(500)
 	}

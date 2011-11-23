@@ -1,6 +1,8 @@
 package org.gfuzzy.examples
 
-import static org.gfuzzy.FuzzySet.*
+import static org.gfuzzy.FuzzySetDefinition.*
+
+import groovy.util.GroovyTestCase
 
 import org.gfuzzy.*
 import org.gfuzzy.zone.*
@@ -21,8 +23,8 @@ class ErrorPositionControllerTests extends GroovyTestCase {
 			setpoint = 50D
 			output = 50D
 			
-			errorSet = createFuzzySetForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
-			outputSet = createFuzzySetForPeaks("output", [NL:0, NS:25, ZE:50, PS:75, PL:100])
+			errorSetDefinition = createDefinitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
+			outputSetDefinition = createDefinitionForPeaks("output", [NL:0, NS:25, ZE:50, PS:75, PL:100])
 		}
 	}
 	

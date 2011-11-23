@@ -4,13 +4,13 @@ package org.gfuzzy
  * @author Ken Krebs
  *
  */
-class FuzzySet {
+class FuzzySetDefinition {
 
-	def zones = []
+	List<FuzzyZone> zones = []
 
 	String name
 
-	private FuzzySet(String name) {
+	private FuzzySetDefinition(String name) {
 		if(!name) {
 			throw new IllegalArgumentException("name cannot be null")
 		}
@@ -20,12 +20,12 @@ class FuzzySet {
 	/**
 	 * Creates a new FuzzySet using the specified Map of zone names to peak values. 
 	 * 
-	 * @param name of the FuzzySet
+	 * @param name of the FuzzySetDefinition
 	 * @param namePeakMap Map<String, Number> to be used to create the FuzzyZones
-	 * @return FuzzySet
+	 * @return FuzzySetDefinition
 	 */
-	static FuzzySet createFuzzySetForPeaks(String name, Map namePeakMap) {
-		FuzzySet fuzzySet = new FuzzySet(name)
+	static FuzzySetDefinition createDefinitionForPeaks(String name, Map namePeakMap) {
+		FuzzySetDefinition fuzzySet = new FuzzySetDefinition(name)
 		if(!namePeakMap) {
 			throw new IllegalArgumentException("namePeakMap cannot be null or empty")
 		}
@@ -66,14 +66,14 @@ class FuzzySet {
 	}
 
 	/**
-	 * Creates a new FuzzySet using the specified Map of zone names to ranges. 
+	 * Creates a new FuzzySetDefinition using the specified Map of zone names to ranges. 
 	 * 
-	 * @param name of the FuzzySet
+	 * @param name of the FuzzySetDefinition
 	 * @param nameRangeMap Map<String, Range> to be used to create the FuzzyZones
-	 * @return FuzzySet
+	 * @return FuzzySetDefinition
 	 */
-	static FuzzySet createFuzzySetForRanges(String name, Map nameRangeMap) {
-		FuzzySet fuzzySet = new FuzzySet(name)
+	static FuzzySetDefinition createDefinitionForRanges(String name, Map nameRangeMap) {
+		FuzzySetDefinition fuzzySet = new FuzzySetDefinition(name)
 
 		if(!nameRangeMap) {
 			throw new IllegalArgumentException("nameRangeMap cannot be null or empty")
@@ -99,15 +99,15 @@ class FuzzySet {
 		fuzzySet
 	}
 
-	Number getFrom() {
+	double getFrom() {
 		zones[0].from
 	}
 
-	Number getTo() {
+	double getTo() {
 		zones[-1].to
 	}
 
-	Map fuzzify(Number value) {
+	Map<String, Fuzzy> fuzzify(Number value) {
 		def fuzzies = [:]
 		zones.each { zone ->
 			fuzzies[zone.name] = zone.fuzzify(value)
@@ -115,7 +115,7 @@ class FuzzySet {
 		fuzzies
 	}
 
-	Map fuzzies() {
+	Map<String, Fuzzy> fuzzies() {
 		def fuzzies = [:]
 		zones.each { zone ->
 			fuzzies[zone.name] = Fuzzy.MIN
@@ -123,7 +123,7 @@ class FuzzySet {
 		fuzzies
 	}
 
-	Number defuzzify(def fuzzies) {
+	double defuzzify(def fuzzies) {
 		final double ZERO = 0D
 		double dividend = ZERO
 		double divisor = ZERO
