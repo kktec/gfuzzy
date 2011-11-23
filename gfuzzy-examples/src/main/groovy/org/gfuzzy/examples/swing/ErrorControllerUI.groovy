@@ -17,6 +17,7 @@ import org.gfuzzy.FuzzySet
 import org.gfuzzy.examples.ErrorController
 import org.gfuzzy.swing.FuzzySetPanel
 
+// TODO: formatting, range limiting, javadoc
 class ErrorControllerUI {
 
 	ErrorController controller
@@ -67,8 +68,13 @@ class ErrorControllerUI {
 		outputPanel = new FuzzySetPanel(fuzzySet: controller.outputSet)
 
 		def swing = new SwingBuilder()
-		println UIManager.getInstalledLookAndFeels()
-		swing.lookAndFeel('nimbus')
+		def lafs = UIManager.getInstalledLookAndFeels()
+		def nimbus = lafs.find {
+			it.name == 'Nimbus'
+		}
+		if (nimbus) {
+			swing.lookAndFeel('nimbus')
+		}
 
 		def buildHeaderPanel = {
 			swing.panel() {
