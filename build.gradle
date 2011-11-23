@@ -4,9 +4,10 @@ evaluationDependsOn (':gfuzzy-core')
 
 allprojects {
 	
-	defaultTasks 'build', 'codeNarc', 'javadoc'
+	defaultTasks 'build', 'codeNarc'
 	
 	apply plugin: 'groovy'
+	javadoc.destinationDir = file("/docs/api")
 	
 	apply plugin: 'eclipse'
 	eclipse {

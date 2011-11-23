@@ -1,10 +1,11 @@
 package org.gfuzzy
 
 /**
- * @author Ken Krebs
- *
- * Representation of an immutable Fuzzy Logic value as a Double in the range of 0D through 1D. 
+ * 
+ * Representation of an immutable Fuzzy Logic value as a double in the range of 0.0 through 1.0. 
  * Standard Fuzzy Logic operations are supported such as AND, OR, and NOT.
+ * 
+ * @author Ken Krebs
  */
 class Fuzzy extends Number {
 
