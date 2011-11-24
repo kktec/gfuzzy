@@ -15,6 +15,8 @@ import javax.swing.WindowConstants
 
 import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.examples.ErrorController
+import org.gfuzzy.inference.Inferencer
+import org.gfuzzy.inference.Rule
 import org.gfuzzy.swing.FuzzySetPanel
 
 // TODO: formatting, range limiting, javadoc
@@ -206,6 +208,14 @@ class ErrorControllerUI {
 		ErrorController controller = new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
 			errorSetDefinition: FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
 			outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
+		
+		Inferencer inferencer = new Inferencer()		
+		inferencer << new Rule('PL', ['error': 'NL'])
+		inferencer << new Rule('PS', ['error': 'NS'])
+		inferencer << new Rule('ZE', ['error': 'ZE'])
+		inferencer << new Rule('NS', ['error': 'PS'])
+		inferencer << new Rule('NL', ['error': 'PL'])
+		controller.inferencer = inferencer
 
 		new ErrorControllerUI(controller: controller, sampleCount: 500).init()
 	}

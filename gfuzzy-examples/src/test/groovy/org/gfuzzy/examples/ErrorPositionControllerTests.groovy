@@ -3,6 +3,8 @@ package org.gfuzzy.examples
 import static org.gfuzzy.FuzzySetDefinition.*
 
 import org.gfuzzy.*
+import org.gfuzzy.inference.Inferencer
+import org.gfuzzy.inference.Rule
 import org.gfuzzy.zone.*
 
 /**
@@ -23,6 +25,12 @@ class ErrorPositionControllerTests extends GroovyTestCase {
 			
 			errorSetDefinition = definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
 			outputSetDefinition = definitionForPeaks("output", [NL:0, NS:25, ZE:50, PS:75, PL:100])
+			inferencer = new Inferencer()
+			inferencer << new Rule('PL', ['error': 'NL'])
+			inferencer << new Rule('PS', ['error': 'NS'])
+			inferencer << new Rule('ZE', ['error': 'ZE'])
+			inferencer << new Rule('NS', ['error': 'PS'])
+			inferencer << new Rule('NL', ['error': 'PL'])
 		}
 	}
 	

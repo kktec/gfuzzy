@@ -4,6 +4,7 @@ import static org.gfuzzy.FuzzySetDefinition.*
 
 import org.gfuzzy.*
 import org.gfuzzy.inference.Inferencer
+import org.gfuzzy.inference.Rule
 import org.gfuzzy.zone.*
 
 /**
@@ -13,6 +14,7 @@ import org.gfuzzy.zone.*
 class ErrorVelocityControllerTests extends GroovyTestCase {
 
 	ErrorController controller = new ErrorController()
+	
 
 	@Override
 	void setUp() {
@@ -23,15 +25,12 @@ class ErrorVelocityControllerTests extends GroovyTestCase {
 	
 			errorSetDefinition = definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
 			outputSetDefinition = definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
-//			inferencer = new Inferencer(inputs: [errorSetDefinition], outputs: [outputSetDefinition]//,
-//				rules: [
-//					new Rule(effect: outputSet['PL'], predicates: [errorSet['NL']]),
-//					new Rule(effect: outputSet['SL'], predicates: [errorSet['NS']]),
-//					new Rule(effect: outputSet['ZE'], predicates: [errorSet['ZE']]),
-//					new Rule(effect: outputSet['NS'], predicates: [errorSet['PS']]),
-//					new Rule(effect: outputSet['NL'], predicates: [errorSet['PL']])
-//				]
-//			)
+			inferencer = new Inferencer()
+			inferencer << new Rule('PL', ['error': 'NL'])
+			inferencer << new Rule('PS', ['error': 'NS'])
+			inferencer << new Rule('ZE', ['error': 'ZE'])
+			inferencer << new Rule('NS', ['error': 'PS'])
+			inferencer << new Rule('NL', ['error': 'PL'])
 		}
 	}
 

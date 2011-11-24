@@ -107,20 +107,20 @@ class FuzzySetDefinition {
 		zones[-1].to
 	}
 
-	Map<String, Fuzzy> fuzzify(Number value) {
+	FuzzySet fuzzify(Number value) {
 		def fuzzies = [:]
 		zones.each { zone ->
 			fuzzies[zone.name] = zone.fuzzify(value)
 		}
-		fuzzies
+		new FuzzySet(fuzzies)
 	}
 
-	Map<String, Fuzzy> fuzzies() {
+	FuzzySet fuzzies() {
 		def fuzzies = [:]
 		zones.each { zone ->
 			fuzzies[zone.name] = Fuzzy.MIN
 		}
-		fuzzies
+		new FuzzySet(fuzzies)
 	}
 
 	double defuzzify(def fuzzies) {

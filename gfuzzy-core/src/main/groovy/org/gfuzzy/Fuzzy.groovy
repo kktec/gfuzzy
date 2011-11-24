@@ -1,5 +1,7 @@
 package org.gfuzzy
 
+import groovy.lang.Immutable;
+
 /**
  * 
  * Representation of an immutable Fuzzy Logic value as a double in the range of 0.0 through 1.0. 
@@ -17,7 +19,7 @@ class Fuzzy extends Number {
 
 	static final MAX = new Fuzzy(MAX_VALUE)
 
-	private final Double fuzzy = MIN_VALUE
+	private final double fuzzy
 
 	Fuzzy() {
 	}

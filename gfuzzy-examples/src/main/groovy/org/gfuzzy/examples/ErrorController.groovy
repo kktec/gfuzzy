@@ -1,6 +1,7 @@
 package org.gfuzzy.examples
 
 import org.gfuzzy.*
+import org.gfuzzy.inference.Inferencer
 
 /**
  * @author Ken Krebs
@@ -18,14 +19,8 @@ class ErrorController {
 
 	FuzzySetDefinition outputSetDefinition
 	
-	def infer = { errors, outputs ->
-		outputs.PL |= errors.NL
-		outputs.PS |= errors.NS
-		outputs.ZE |= errors.ZE
-		outputs.NS |= errors.PS
-		outputs.NL |= errors.PL
-	}
-
+	Inferencer inferencer
+	
 	double setpoint
 
 	double output
@@ -42,7 +37,7 @@ class ErrorController {
 		
 		def errors = errorSetDefinition.fuzzify(error)
 		def outputs = outputSetDefinition.fuzzies()
-		infer(errors, outputs)
+		inferencer.infer(['error': errors], outputs)
 
 		result = outputSetDefinition.defuzzify(outputs)
 		if(positioner) {
