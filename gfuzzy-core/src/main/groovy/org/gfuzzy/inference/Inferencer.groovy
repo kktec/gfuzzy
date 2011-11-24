@@ -13,11 +13,11 @@ class Inferencer {
 		}
 	}
 	
-	def leftShift(Rule rule) {
+	List<Rule> leftShift(Rule rule) {
 		rules << rule
 	}
 	
-	Fuzzy processRule(Map inputs, rule) {
+	private Fuzzy processRule(Map inputs, rule) {
 		Fuzzy result = Fuzzy.MAX
 		rule.predicates.each { key, value ->
 			result &= inputs[key][value]

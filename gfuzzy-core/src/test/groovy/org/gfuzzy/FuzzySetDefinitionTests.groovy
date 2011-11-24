@@ -151,7 +151,9 @@ class FuzzySetDefinitionTests extends GroovyTestCase {
 	}
 
 	void test_to_string() {
-		assertEquals fuzzySetDefinition.zones.toString(), fuzzySetDefinition.toString()
+		fuzzySetDefinition.with {
+			assertEquals "$name:$zones", it.toString()
+		}
 	}
 
 	protected void assertFuzzify(Number value, List expected) {

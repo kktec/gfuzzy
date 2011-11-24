@@ -154,6 +154,6 @@ class FuzzySetDefinition {
 
 	@Override
 	String toString() {
-		zones.toString()
+		"$name:$zones"
 	}
 }

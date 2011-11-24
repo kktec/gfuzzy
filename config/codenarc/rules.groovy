@@ -8,12 +8,15 @@ ruleset {
 		exclude 'DuplicateNumberLiteral'
 		exclude 'DuplicateListLiteral'
 		exclude 'DuplicateMapLiteral'
+		exclude 'DuplicateStringLiteral'
 	}
 	ruleset('rulesets/exceptions.xml')
 	ruleset('rulesets/formatting.xml')
 	ruleset('rulesets/generic.xml')
 	ruleset('rulesets/grails.xml')
-	ruleset('rulesets/groovyism.xml')
+	ruleset('rulesets/groovyism.xml') {
+		exclude 'GroovyLangImmutable'
+	}
 	ruleset('rulesets/imports.xml')
 	ruleset('rulesets/jdbc.xml')
 	ruleset('rulesets/junit.xml') {

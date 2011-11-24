@@ -82,7 +82,6 @@ class FuzzyTests extends GroovyTestCase {
 	}
 	
 	void test_equals_with_fuzzy() {
-		assert fuzzy == fuzzy
 		assert fuzzy != new Fuzzy(0.24)
 		assert fuzzy == new Fuzzy(0.25)
 		assert fuzzy != new Fuzzy(0.26)

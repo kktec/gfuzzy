@@ -1,7 +1,5 @@
 package org.gfuzzy
 
-import java.util.Map;
-
 class FuzzySet {
 
 	Map<String, Fuzzy> fuzzies
@@ -25,6 +23,5 @@ class FuzzySet {
 			s << "$key:$value "
 		}
 	}
-	
 	
 }

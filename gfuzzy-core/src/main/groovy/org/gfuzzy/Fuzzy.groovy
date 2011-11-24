@@ -1,7 +1,5 @@
 package org.gfuzzy
 
-import groovy.lang.Immutable;
-
 /**
  * 
  * Representation of an immutable Fuzzy Logic value as a double in the range of 0.0 through 1.0. 
