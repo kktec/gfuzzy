@@ -11,6 +11,7 @@ import org.gfuzzy.FallingFuzzyZone
 import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.RisingFallingFuzzyZone
 import org.gfuzzy.RisingFuzzyZone
+import org.gfuzzy.util.DoubleCategory
 import org.gfuzzy.util.RangeCategory
 
 class FuzzySetPanel extends JPanel {
@@ -18,7 +19,7 @@ class FuzzySetPanel extends JPanel {
 	FuzzySetDefinition fuzzySetDefinition
 
 	def sizeInfo
-	
+
 	double value
 
 	@Override
@@ -31,23 +32,21 @@ class FuzzySetPanel extends JPanel {
 		g.fillRect(x, y, w, h)
 		g.color = Color.BLACK
 		g.drawRect(x, y, w, h)
-		
+
 		sizeInfo = createSizeInfo()
-		int extraX = width * 0.05
+		int extraX = width * 0.05D
 		sizeInfo.with {
-		g.font = new Font('Arial', Font.BOLD, minY / 3)
+			g.font = new Font('Arial', Font.BOLD, minY / 3)
 			g.drawLine minX - extraX, minY, maxX + extraX, minY
 			g.drawLine minX - extraX, maxY, maxX + extraX, maxY
 		}
-		fuzzySetDefinition.zones.each { 
-			drawZone(it, g)
-		}
+		fuzzySetDefinition.zones.each {  drawZone(it, g) }
 		drawValue(g)
 	}
-	
+
 	void update(double v) {
 		use(RangeCategory) {
-				value = fuzzySetDefinition.range.limit(v)
+			value = fuzzySetDefinition.range.limit(v)
 		}
 		repaint()
 	}
@@ -55,11 +54,11 @@ class FuzzySetPanel extends JPanel {
 	Expando createSizeInfo() {
 		Expando sizeInfo = new Expando()
 		sizeInfo.range = fuzzySetDefinition.to - fuzzySetDefinition.from
-		int minY = height * 0.15
+		int minY = height * 0.15D
 		sizeInfo.minY = minY
 		int maxY = height - minY
 		sizeInfo.maxY = maxY
-		int minX = width * 0.1
+		int minX = width * 0.1D
 		sizeInfo.minX = minX
 		int maxX = width - minX
 		sizeInfo.maxX = maxX
@@ -67,12 +66,11 @@ class FuzzySetPanel extends JPanel {
 		sizeInfo.rangeX = rangeX
 		sizeInfo
 	}
-	
+
 	void drawValue(Graphics g) {
 		int x = calculateX(value - fuzzySetDefinition.from)
 		g.color = new Color(176, 176, 0)
 		g.drawLine x, sizeInfo.minY + 1, x, sizeInfo.maxY - 1
-		
 	}
 
 	void drawZone(FallingFuzzyZone z, Graphics g) {
@@ -112,8 +110,12 @@ class FuzzySetPanel extends JPanel {
 
 	void drawZonePeak(v, x, Graphics g) {
 		FontMetrics fm = g.fontMetrics
-		int width = fm.stringWidth(v.toString())
-		g.drawString v.toString(), x - width / 2, sizeInfo.maxY + 5 * fm.leading + fm.ascent
+		String formattedV
+		use(DoubleCategory) {
+			formattedV = v.formatDefault()
+		}
+			int width = fm.stringWidth(formattedV)
+		g.drawString formattedV, x - width / 2, sizeInfo.maxY + 5 * fm.leading + fm.ascent
 	}
 
 	int calculateX(v) {

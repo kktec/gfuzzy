@@ -18,13 +18,13 @@ import org.gfuzzy.examples.ErrorController
 import org.gfuzzy.inference.Inferencer
 import org.gfuzzy.inference.Rule
 import org.gfuzzy.swing.FuzzySetPanel
+import org.gfuzzy.util.DoubleCategory
 
-// TODO: formatting, javadoc
 class ErrorControllerUI {
 
 	def swing = new SwingBuilder()
 	def sampleCount
-		
+
 	ErrorController controller
 	def input = 0.0
 
@@ -33,7 +33,9 @@ class ErrorControllerUI {
 	JLabel inputLabel
 	def inputChanged = {
 		input = inputSlider.value
-		inputLabel.text = input * 1.0
+		use(DoubleCategory) {
+			inputLabel.text = input.formatDefault()
+		}
 	}
 
 	JSlider setpointSlider
@@ -42,7 +44,9 @@ class ErrorControllerUI {
 	def setpointChanged = {
 		def setpoint = setpointSlider.value
 		controller.setpoint = setpoint
-		setpointLabel.text = setpoint * 1.0
+		use(DoubleCategory) {
+			setpointLabel.text = setpoint.formatDefault()
+		}
 	}
 
 	JLabel errorLabel
@@ -55,13 +59,15 @@ class ErrorControllerUI {
 	JButton updateButton
 	def updateAction = {
 		def output = controller.control(input)
-		outputLabel.text = output * 1.0
-		outputBar.value = output
-		errorLabel.text = controller.error
-		trendPanel.addSample()
-		errorPanel.update controller.error
-		outputPanel.update controller.result
-		resultLabel.text = controller.result * 1.0
+		use(DoubleCategory) {
+			outputLabel.text = output.formatDefault()
+			outputBar.value = output
+			errorLabel.text = controller.error
+			trendPanel.addSample()
+			errorPanel.update controller.error
+			outputPanel.update controller.result
+			resultLabel.text = controller.result.formatDefault()
+		}
 	}
 
 	ControllerTrendPanel trendPanel
@@ -128,29 +134,31 @@ class ErrorControllerUI {
 	}
 
 	def buildWidgetsPanel = {
-		swing.panel(layout: new BorderLayout()) {
-			panel(constraints: BorderLayout.WEST) {
-				panel(layout: new BorderLayout()) {
-					panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildInputSlider() }
-					panel(constraints: BorderLayout.SOUTH) {
-						label("Input:", foreground: inputColor)
-						inputLabel =  label("$input")
+		use(DoubleCategory) {
+			swing.panel(layout: new BorderLayout()) {
+				panel(constraints: BorderLayout.WEST) {
+					panel(layout: new BorderLayout()) {
+						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildInputSlider() }
+						panel(constraints: BorderLayout.SOUTH) {
+							label("Input:", foreground: inputColor)
+							inputLabel =  label(input.formatDefault())
+						}
 					}
-				}
-				panel(layout: new BorderLayout()) {
-					panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildSetpointSlider() }
-					panel(constraints: BorderLayout.SOUTH) {
-						label("Setpoint:", foreground: setpointColor)
-						setpointLabel = label("$controller.setpoint")
+					panel(layout: new BorderLayout()) {
+						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) { buildSetpointSlider() }
+						panel(constraints: BorderLayout.SOUTH) {
+							label("Setpoint:", foreground: setpointColor)
+							setpointLabel = label(controller.setpoint.formatDefault())
+						}
 					}
-				}
-				panel(layout: new BorderLayout()) {
-					panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) {
-						outputBar = progressBar(orientation: JProgressBar.VERTICAL, foreground: outputColor, preferredSize: [0, 200])
-					}
-					panel(constraints: BorderLayout.SOUTH) {
-						label("Output:", foreground: outputColor)
-						outputLabel = label("$controller.output")
+					panel(layout: new BorderLayout()) {
+						panel(constraints: BorderLayout.CENTER, layout: new BorderLayout()) {
+							outputBar = progressBar(orientation: JProgressBar.VERTICAL, foreground: outputColor, preferredSize: [0, 200])
+						}
+						panel(constraints: BorderLayout.SOUTH) {
+							label("Output:", foreground: outputColor)
+							outputLabel = label(controller.output.formatDefault())
+						}
 					}
 				}
 			}
@@ -165,7 +173,9 @@ class ErrorControllerUI {
 					panel(errorPanel,  preferredSize: [300, 200])
 					panel(constraints: BorderLayout.SOUTH) {
 						label(horizontalAlignment: JLabel.CENTER, errorPanel.fuzzySetDefinition.name)
-						errorLabel = label("$controller.error")
+						use(DoubleCategory) {
+							errorLabel = label(controller.error.formatDefault())
+						}
 					}
 				}
 				hstrut(width: 40)
@@ -173,7 +183,9 @@ class ErrorControllerUI {
 					panel(outputPanel, preferredSize: [300, 200])
 					panel(constraints: BorderLayout.SOUTH) {
 						label(horizontalAlignment: JLabel.CENTER, outputPanel.fuzzySetDefinition.name)
-						resultLabel = label("$controller.result")
+						use(DoubleCategory) {
+							resultLabel = label(controller.result.formatDefault())
+						}
 					}
 				}
 				hstrut(width: 20)
@@ -206,10 +218,10 @@ class ErrorControllerUI {
 
 	static void main(String[] args) {
 		ErrorController controller = new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
-			errorSetDefinition: FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
-			outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
-		
-		Inferencer inferencer = new Inferencer()		
+				errorSetDefinition: FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
+				outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
+
+		Inferencer inferencer = new Inferencer()
 		inferencer << new Rule('PL', ['error': 'NL'])
 		inferencer << new Rule('PS', ['error': 'NS'])
 		inferencer << new Rule('ZE', ['error': 'ZE'])
