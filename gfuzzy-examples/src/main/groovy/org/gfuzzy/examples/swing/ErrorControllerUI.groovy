@@ -19,7 +19,7 @@ import org.gfuzzy.inference.Inferencer
 import org.gfuzzy.inference.Rule
 import org.gfuzzy.swing.FuzzySetPanel
 
-// TODO: formatting, range limiting, javadoc
+// TODO: formatting, javadoc
 class ErrorControllerUI {
 
 	def swing = new SwingBuilder()

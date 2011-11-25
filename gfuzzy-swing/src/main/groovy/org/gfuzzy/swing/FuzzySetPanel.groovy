@@ -11,6 +11,7 @@ import org.gfuzzy.FallingFuzzyZone
 import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.RisingFallingFuzzyZone
 import org.gfuzzy.RisingFuzzyZone
+import org.gfuzzy.util.RangeCategory
 
 class FuzzySetPanel extends JPanel {
 
@@ -45,16 +46,8 @@ class FuzzySetPanel extends JPanel {
 	}
 	
 	void update(double v) {
-		fuzzySetDefinition.with {
-			if(v < from) {
-				value = from
-			}
-			else if(v > to) {
-				value = to
-			}
-			else {
-				value = v
-			}
+		use(RangeCategory) {
+				value = fuzzySetDefinition.range.limit(v)
 		}
 		repaint()
 	}

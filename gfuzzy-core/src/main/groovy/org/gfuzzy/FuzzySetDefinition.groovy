@@ -98,6 +98,10 @@ class FuzzySetDefinition {
 		fuzzySet.zones = zones
 		fuzzySet
 	}
+	
+	Range getRange() {
+		from..to
+	}
 
 	double getFrom() {
 		zones[0].from

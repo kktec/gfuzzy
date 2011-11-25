@@ -14,6 +14,11 @@ class FuzzySetDefinitionTests extends GroovyTestCase {
 	FuzzySetDefinition fuzzySetDefinition =
 	definitionForRanges("test", [NL:-100..-50, NS:-100..0, ZE:-50..50, PS:0..100, PL:50..100])
 
+	void test_range() {
+		assert -100 == fuzzySetDefinition.range.from 
+		assert 100 == fuzzySetDefinition.range.to 
+	}
+	
 	void test_peak_factory_with_5_zones() {
 		assert5Zones definitionForPeaks("test", [NL:-100, NS:-50, ZE:0, PS:50, PL:100])
 	}

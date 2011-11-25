@@ -2,6 +2,7 @@ package org.gfuzzy.examples
 
 import org.gfuzzy.*
 import org.gfuzzy.inference.Inferencer
+import org.gfuzzy.util.RangeCategory
 
 /**
  * @author Ken Krebs
@@ -45,15 +46,10 @@ class ErrorController {
 		} else {
 			output += result
 		}
-
-		if(output <= outputRange.from) {
-			output = outputRange.from
-		}
-		else if(output >= outputRange.to) {
-			output = outputRange.to
-		}
 		
-		output
+		use(RangeCategory) {
+			output = outputRange.limit(output)
+		}
 	}
 
 }
