@@ -1,22 +1,24 @@
-// use Gradle 1.0-milestone-5
+// use Gradle 1.0-milestone-6
 
 evaluationDependsOn (':gfuzzy-core')
 
-project.version = '0.1'
+group = "org.gfuzzy"
+version = '0.1'
 
 allprojects {
 	
-	defaultTasks 'build', 'codeNarc', 'cobertura', 'groovydoc', 'projectReport'
+	defaultTasks 'clean', 'build', 'codeNarc', 'cobertura', 'groovydoc', 'projectReport'
 	
 	apply plugin: 'groovy'
-	javadoc.destinationDir = file("/docs/api")
+	
+	sourceCompatibility = 1.6
 	
 	apply plugin: 'eclipse'
 	eclipse {
-		pathVariables 'GRADLE_M5_CACHE': file("${gradle.startParameter.gradleUserHomeDir}/caches/artifacts-3")
+		pathVariables 'GRADLE_CACHE': file("${gradle.startParameter.gradleUserHomeDir}/caches/artifacts-4")
 		classpath {
 			containers.clear()
-			containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"
+			containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-$sourceCompatibility"
 		}
 	}
 	
@@ -29,8 +31,6 @@ allprojects {
 	coverageSourceDirs = ['src/main/groovy']
 	
 	apply plugin: 'project-report'
-	
-	sourceCompatibility = 1.6
 	
 	repositories {
 		mavenCentral()
