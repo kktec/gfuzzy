@@ -28,15 +28,18 @@ class InferencerTests extends GroovyTestCase {
 	}
 
 	void test_infer_withRules() {
-		inferencer << new Rule('N', [input0: 'Z', input1: 'Z', input2: 'N'])
-		inferencer << new Rule('Z', [input0: 'Z', input1: 'Z', input2: 'Z'])
-		inferencer << new Rule('P', [input0: 'Z', input1: 'P'])
-		assert 3 == inferencer.rules.size()
+		inferencer
+				.rule('N', [input0: 'Z', input1: 'Z', input2: 'N'])
+				.rule('Z', [input0: 'Z', input1: 'Z', input2: 'Z'])
+				.rule('P', [input0: 'Z', input1: 'P'])
+		assertRules()
+	}
 
+	private assertRules() {
+		assert 3 == inferencer.rules.size()
 		inferencer.infer([input0: input0, input1: input1, input2: input2], output)
 		assertEquals new Fuzzy(0.24).doubleValue(), output['N'].doubleValue(),  0.01d
 		assertEquals new Fuzzy(0.5).doubleValue(), output['Z'].doubleValue(),  0.01d
 		assertEquals new Fuzzy(0.33).doubleValue(), output['P'].doubleValue(),  0.01d
 	}
-	
 }

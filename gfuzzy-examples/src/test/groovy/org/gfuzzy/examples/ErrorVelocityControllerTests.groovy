@@ -14,23 +14,23 @@ import org.gfuzzy.zone.*
 class ErrorVelocityControllerTests extends GroovyTestCase {
 
 	ErrorController controller = new ErrorController()
-	
+
 
 	@Override
 	void setUp() {
-		controller.with { 
+		controller.with {
 			outputRange = 0D..100D
 			setpoint = 50D
 			output = 50D
-	
+
 			errorSetDefinition = definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
 			outputSetDefinition = definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
 			inferencer = new Inferencer()
-			inferencer << new Rule('PL', ['error': 'NL'])
-			inferencer << new Rule('PS', ['error': 'NS'])
-			inferencer << new Rule('ZE', ['error': 'ZE'])
-			inferencer << new Rule('NS', ['error': 'PS'])
-			inferencer << new Rule('NL', ['error': 'PL'])
+					.rule('PL', ['error': 'NL'])
+					.rule('PS', ['error': 'NS'])
+					.rule('ZE', ['error': 'ZE'])
+					.rule('NS', ['error': 'PS'])
+					.rule('NL', ['error': 'PL'])
 		}
 	}
 
@@ -77,5 +77,4 @@ class ErrorVelocityControllerTests extends GroovyTestCase {
 		assertEquals 45D, controller.control(60D)
 		assertEquals 40D, controller.control(60D)
 	}
-
 }

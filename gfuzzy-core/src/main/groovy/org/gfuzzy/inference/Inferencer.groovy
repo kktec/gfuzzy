@@ -1,5 +1,7 @@
 package org.gfuzzy.inference
 
+import java.util.Map;
+
 import org.gfuzzy.Fuzzy
 import org.gfuzzy.FuzzySet
 
@@ -13,8 +15,9 @@ class Inferencer {
 		}
 	}
 	
-	List<Rule> leftShift(Rule rule) {
-		rules << rule
+	Inferencer rule(String zone, Map<String, String>predicates) {
+		rules << new Rule(zone, predicates)
+		this
 	}
 	
 	private Fuzzy processRule(Map inputs, rule) {
