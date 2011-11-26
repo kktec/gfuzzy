@@ -20,7 +20,7 @@ class ErrorController {
 
 	FuzzySetDefinition outputSetDefinition
 	
-	Inferencer inferencer
+	Inferencer outputInferencer
 	
 	double setpoint
 
@@ -37,8 +37,9 @@ class ErrorController {
 		error = input - setpoint
 		
 		def errors = errorSetDefinition.fuzzify(error)
-		def outputs = outputSetDefinition.fuzzies()
-		inferencer.infer(['error': errors], outputs)
+		def outputs = outputSetDefinition.set()
+		def inputs = [error: errors]
+		outputInferencer.infer(inputs, outputs)
 
 		result = outputSetDefinition.defuzzify(outputs)
 		if(positioner) {

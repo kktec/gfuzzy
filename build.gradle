@@ -2,9 +2,11 @@
 
 evaluationDependsOn (':gfuzzy-core')
 
+project.version = '0.1'
+
 allprojects {
 	
-	defaultTasks 'build', 'codeNarc'
+	defaultTasks 'build', 'codeNarc', 'cobertura', 'groovydoc', 'projectReport'
 	
 	apply plugin: 'groovy'
 	javadoc.destinationDir = file("/docs/api")
@@ -28,7 +30,6 @@ allprojects {
 	
 	apply plugin: 'project-report'
 	
-	project.sourceCompatibility = 1.6
 	sourceCompatibility = 1.6
 	
 	repositories {

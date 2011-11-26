@@ -17,7 +17,7 @@ class InferencerTests extends GroovyTestCase {
 	def input0 = inputSet0.fuzzify(2.5)
 	def input1 = inputSet1.fuzzify(5)
 	def input2 = inputSet2.fuzzify(-6)
-	def output = outputSet.fuzzies()
+	def output = outputSet.set()
 
 	void test_infer_withoutRules() {
 		assert 0 == inferencer.rules.size()

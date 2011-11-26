@@ -11,7 +11,7 @@ class DoubleCategory {
 	}
 	
 	static String format(v, fractionalDigits) {
-		def f = NumberFormat.getInstance()
+		def f = NumberFormat.instance
 		f.decimalSeparatorAlwaysShown = true
 		f.minimumIntegerDigits = 1
 		f.minimumFractionDigits = fractionalDigits
@@ -20,7 +20,7 @@ class DoubleCategory {
 	}
 	
 	static String formatDefault(v) {
-		def f = NumberFormat.getInstance()
+		def f = NumberFormat.instance
 		f.applyPattern PATTERN
 		f.format(v)
 	}

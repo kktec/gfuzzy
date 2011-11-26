@@ -1,7 +1,5 @@
 package org.gfuzzy.inference
 
-import java.util.Map;
-
 import org.gfuzzy.Fuzzy
 import org.gfuzzy.FuzzySet
 

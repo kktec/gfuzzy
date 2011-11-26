@@ -112,28 +112,28 @@ class FuzzySetDefinition {
 	}
 
 	FuzzySet fuzzify(Number value) {
-		def fuzzies = [:]
+		def set = [:]
 		zones.each { zone ->
-			fuzzies[zone.name] = zone.fuzzify(value)
+			set[zone.name] = zone.fuzzify(value)
 		}
-		new FuzzySet(fuzzies)
+		new FuzzySet(set)
 	}
 
-	FuzzySet fuzzies() {
-		def fuzzies = [:]
+	FuzzySet set() {
+		def set = [:]
 		zones.each { zone ->
-			fuzzies[zone.name] = Fuzzy.MIN
+			set[zone.name] = Fuzzy.MIN
 		}
-		new FuzzySet(fuzzies)
+		new FuzzySet(set)
 	}
 
-	double defuzzify(def fuzzies) {
+	double defuzzify(set) {
 		final double ZERO = 0D
 		double dividend = ZERO
 		double divisor = ZERO
 		zones.each { zone ->
-			dividend += zone.defuzzify(fuzzies[zone.name])
-			divisor += fuzzies[zone.name]
+			dividend += zone.defuzzify(set[zone.name])
+			divisor += set[zone.name]
 		}
 		divisor == ZERO ? ZERO : dividend / divisor
 	}

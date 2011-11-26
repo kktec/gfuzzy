@@ -227,7 +227,7 @@ class ErrorControllerUI {
 		inferencer << new Rule('ZE', ['error': 'ZE'])
 		inferencer << new Rule('NS', ['error': 'PS'])
 		inferencer << new Rule('NL', ['error': 'PL'])
-		controller.inferencer = inferencer
+		controller.outputInferencer = inferencer
 
 		new ErrorControllerUI(controller: controller, sampleCount: 500).init()
 	}

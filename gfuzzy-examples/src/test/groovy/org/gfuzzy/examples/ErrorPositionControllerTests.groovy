@@ -4,7 +4,6 @@ import static org.gfuzzy.FuzzySetDefinition.*
 
 import org.gfuzzy.*
 import org.gfuzzy.inference.Inferencer
-import org.gfuzzy.inference.Rule
 import org.gfuzzy.zone.*
 
 /**
@@ -23,14 +22,14 @@ class ErrorPositionControllerTests extends GroovyTestCase {
 			setpoint = 50D
 			output = 50D
 
-			errorSetDefinition = definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
-			outputSetDefinition = definitionForPeaks("output", [NL:0, NS:25, ZE:50, PS:75, PL:100])
-			inferencer = new Inferencer()
-					.rule('PL', ['error': 'NL'])
-					.rule('PS', ['error': 'NS'])
-					.rule('ZE', ['error': 'ZE'])
-					.rule('NS', ['error': 'PS'])
-					.rule('NL', ['error': 'PL'])
+			errorSetDefinition = definitionForPeaks('error', [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
+			outputSetDefinition = definitionForPeaks('output', [NL:0, NS:25, ZE:50, PS:75, PL:100])
+			outputInferencer = new Inferencer()
+					.rule('PL', [error: 'NL'])
+					.rule('PS', [error: 'NS'])
+					.rule('ZE', [error: 'ZE'])
+					.rule('NS', [error: 'PS'])
+					.rule('NL', [error: 'PL'])
 		}
 	}
 

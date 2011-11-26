@@ -88,40 +88,40 @@ class FuzzySetDefinitionTests extends GroovyTestCase {
 	}
 
 	void test_fuzzify_with_5_zones() {
-		assertFuzzify(-100, [1d, 0d, 0d, 0d, 0d])
-		assertFuzzify(-62.5, [0.25d, 0.75d, 0d, 0d, 0d])
-		assertFuzzify(-50, [0d, 1d, 0d, 0d, 0d])
-		assertFuzzify(-12.5, [0d, 0.25d, 0.75d, 0d, 0d])
-		assertFuzzify(0, [0d, 0d, 1d, 0d, 0d])
-		assertFuzzify(12.5, [0d, 0d, 0.75d, 0.25d, 0d])
-		assertFuzzify(25, [0d, 0d, 0.5d, 0.5d, 0d])
-		assertFuzzify(50, [0d, 0d, 0d, 1d, 0d])
-		assertFuzzify(75, [0d, 0d, 0d, 0.5d, 0.5d])
-		assertFuzzify(100, [0d, 0d, 0d, 0d, 1d])
+		assertFuzzify(-100, [1, 0, 0, 0, 0])
+		assertFuzzify(-62.5, [0.25, 0.75, 0, 0, 0])
+		assertFuzzify(-50, [0, 1, 0, 0, 0])
+		assertFuzzify(-12.5, [0, 0.25, 0.75, 0, 0])
+		assertFuzzify(0, [0, 0, 1, 0, 0])
+		assertFuzzify(12.5, [0, 0, 0.75, 0.25, 0])
+		assertFuzzify(25, [0, 0, 0.5, 0.5, 0])
+		assertFuzzify(50, [0, 0, 0, 1, 0])
+		assertFuzzify(75, [0, 0, 0, 0.5, 0.5])
+		assertFuzzify(100, [0, 0, 0, 0, 1])
 	}
 
 	void test_defuzzify_with_5_zones() {
-		assertDefuzzify(-100, [1d, 0d, 0d, 0d, 0d])
-		assertDefuzzify(-62.5, [0.25d, 0.75d, 0d, 0d, 0d])
-		assertDefuzzify(-50, [0d, 1d, 0d, 0d, 0d])
-		assertDefuzzify(-12.5, [0d, 0.25d, 0.75d, 0d, 0d])
-		assertDefuzzify(0, [0d, 0d, 1d, 0d, 0d])
-		assertDefuzzify(12.5, [0d, 0d, 0.75d, 0.25d, 0d])
-		assertDefuzzify(25, [0d, 0d, 0.5d, 0.5d, 0d])
-		assertDefuzzify(50, [0d, 0d, 0d, 1d, 0d])
-		assertDefuzzify(75, [0d, 0d, 0d, 0.5d, 0.5d])
-		assertDefuzzify(100, [0d, 0d, 0d, 0d, 1d])
+		assertDefuzzify(-100, [1, 0, 0, 0, 0])
+		assertDefuzzify(-62.5, [0.25, 0.75, 0, 0, 0])
+		assertDefuzzify(-50, [0, 1, 0, 0, 0])
+		assertDefuzzify(-12.5, [0, 0.25, 0.75, 0, 0])
+		assertDefuzzify(0, [0, 0, 1, 0, 0])
+		assertDefuzzify(12.5, [0, 0, 0.75, 0.25, 0])
+		assertDefuzzify(25, [0, 0, 0.5, 0.5, 0])
+		assertDefuzzify(50, [0, 0, 0, 1, 0])
+		assertDefuzzify(75, [0, 0, 0, 0.5, 0.5])
+		assertDefuzzify(100, [0, 0, 0, 0, 1])
 	}
 
 	void test_defuzzify_with_all_zero_zones() {
-		assertDefuzzify(0, [0d, 0d, 0d, 0d, 0d])
+		assertDefuzzify(0, [0, 0, 0, 0, 0])
 	}
 
 	void test_fuzzify_defuzzify_with_5_zones() {
-		for(value in (-100d..100d).step(10)) {
-			def fuzzify = fuzzySetDefinition.fuzzify(value)
-			def defuzzify = fuzzySetDefinition.defuzzify(fuzzify)
-			assertEquals value, defuzzify, 0.0001d
+		for(value in (-100..100).step(10)) {
+			FuzzySet set = fuzzySetDefinition.fuzzify(value)
+			double defuzzify = fuzzySetDefinition.defuzzify(set)
+			assertEquals value, defuzzify, 0.0001
 		}
 	}
 
@@ -147,7 +147,7 @@ class FuzzySetDefinitionTests extends GroovyTestCase {
 	}
 
 	void test_fuzzies_with_5_zones() {
-		def set = fuzzySetDefinition.fuzzies()
+		def set = fuzzySetDefinition.set()
 		assert MIN == set['NL']
 		assert MIN == set['NS']
 		assert MIN == set['ZE']
