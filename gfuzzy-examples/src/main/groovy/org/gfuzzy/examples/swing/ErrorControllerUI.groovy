@@ -222,11 +222,11 @@ class ErrorControllerUI {
 				outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
 
 		Inferencer inferencer = new Inferencer()
-		inferencer << new Rule('PL', ['error': 'NL'])
-		inferencer << new Rule('PS', ['error': 'NS'])
-		inferencer << new Rule('ZE', ['error': 'ZE'])
-		inferencer << new Rule('NS', ['error': 'PS'])
-		inferencer << new Rule('NL', ['error': 'PL'])
+			.rule('PL', ['error': 'NL'])
+			.rule('PS', ['error': 'NS'])
+			.rule('ZE', ['error': 'ZE'])
+			.rule('NS', ['error': 'PS'])
+			.rule('NL', ['error': 'PL'])
 		controller.outputInferencer = inferencer
 
 		new ErrorControllerUI(controller: controller, sampleCount: 500).init()
