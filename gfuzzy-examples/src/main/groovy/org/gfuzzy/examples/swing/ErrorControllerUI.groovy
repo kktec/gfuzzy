@@ -87,7 +87,7 @@ class ErrorControllerUI {
 		swing.frame(title: "gfuzzy Controller Demo",
 				defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
 				location: [100, 200],
-				preferredSize: [1000, 660],
+				preferredSize: [1000, 900],
 				pack:true, show:true) {
 					scrollPane {
 						panel {
@@ -95,6 +95,8 @@ class ErrorControllerUI {
 								buildHeaderPanel()
 								vstrut()
 								buildControlsPanel()
+								vstrut(height: 20)
+								buildRulesPanel()
 								vstrut(height: 20)
 								buildFuzzySetPanel()
 								vstrut()
@@ -212,6 +214,18 @@ class ErrorControllerUI {
 	def buildButtonPanel = {
 		swing.panel(constraints: BorderLayout.SOUTH) {
 			updateButton = button(actionPerformed: updateAction, "Update Controller")
+		}
+	}
+	
+	def buildRulesPanel = {
+		swing.panel(preferredSize: [100, 120]) {
+			vbox {
+				label "Rules for $controller.outputInferencer.name inference:"
+				vstrut()
+				controller.outputInferencer.stringify().each {
+					label it
+				}
+			}
 		}
 	}
 
