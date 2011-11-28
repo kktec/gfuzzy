@@ -15,7 +15,7 @@ allprojects {
 	
 	apply plugin: 'eclipse'
 	eclipse {
-		pathVariables 'GRADLE_CACHE': file("${gradle.startParameter.gradleUserHomeDir}/caches/artifacts-4")
+		pathVariables 'GRADLE_USER_HOME': gradle.gradleUserHomeDir
 		classpath {
 			containers.clear()
 			containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-$sourceCompatibility"
