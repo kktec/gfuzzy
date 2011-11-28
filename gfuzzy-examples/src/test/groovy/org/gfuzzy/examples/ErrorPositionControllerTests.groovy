@@ -24,7 +24,7 @@ class ErrorPositionControllerTests extends GroovyTestCase {
 
 			errorSetDefinition = definitionForPeaks('error', [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
 			outputSetDefinition = definitionForPeaks('output', [NL:0, NS:25, ZE:50, PS:75, PL:100])
-			outputInferencer = new Inferencer()
+			outputInferencer = new Inferencer('output')
 					.rule('PL', [error: 'NL'])
 					.rule('PS', [error: 'NS'])
 					.rule('ZE', [error: 'ZE'])

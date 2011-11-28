@@ -221,7 +221,7 @@ class ErrorControllerUI {
 				errorSetDefinition: FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
 				outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
 
-		Inferencer inferencer = new Inferencer()
+		Inferencer inferencer = new Inferencer("output")
 			.rule('PL', ['error': 'NL'])
 			.rule('PS', ['error': 'NS'])
 			.rule('ZE', ['error': 'ZE'])
