@@ -1,0 +1,374 @@
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+	<h1>Football Game Picks</h1>
+	
+	<p>I want to be able to predict the winner of a football game based on information about past performance.</p>
+	
+	<div>
+	<p>
+		Given a home team and a visiting team<br/>
+		With the folowing rules:
+		<table concordion:verifyRows="#rule : ruleStrings()">
+			<tr><th concordion:assertEquals="#rule">Rule</th></tr>
+			<tr><td>IF winLoss.Strong THEN win.Win 1.0</td></tr>
+			<tr><td>IF winLoss.Mediocre THEN win.Tie 1.0</td></tr>
+			<tr><td>IF winLoss.Weak THEN win.Lose 1.0</td></tr>
+			<tr><td>IF field.Strong THEN win.Win 0.5</td></tr>
+			<tr><td>IF field.Mediocre THEN win.Tie 0.5</td></tr>
+			<tr><td>IF field.Weak THEN win.Lose 0.5</td></tr>
+			<tr><td>IF homeField.Home THEN win.Win 0.01</td></tr>
+			<tr><td>IF homeField.Visitor THEN win.Lose 0.01</td></tr>
+			<tr><td>IF healthiness.Good THEN win.Win 0.2</td></tr>
+			<tr><td>IF healthiness.Bad THEN win.Lose 0.2</td></tr>
+			<tr><td>IF favoredBy.Favored THEN win.Win 1.0</td></tr>
+			<tr><td>IF favoredBy.NotFavored THEN win.Tie 1.0</td></tr>
+		</table>
+		<ul>
+			And the following constraints
+			<li>each teams won/loss record</li>
+			<li>each teams won/loss record for home or visiting play</li>
+			<li>a healthiness factor</li>
+			<li>the point spread</li>
+		</ul>
+		<table>
+			<tr>
+				<th>Scenario</th>
+				<th>Visiting Team</th>
+				<th>Wins</th>
+				<th>Losses</th>
+				<th>Wins while Visiting</th>
+				<th>Losses while Visiting</th>
+				<th>Healthiness Factor</th>
+				<th>Favored By</th>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Only advantage is home field</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">0</td>
+				<td concordion:set="#losses">0</td>
+				<td concordion:set="#fieldWins">0</td>
+				<td concordion:set="#fieldLosses">0</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor has better win/loss record</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">3</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home has better win/loss record</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">2</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor has better field win/loss record</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">3</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home has better field win/loss record</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">2</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor has a little better healthiness</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home has a lot better healthiness</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">50</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor is heavily favored</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">10</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor is slightly favored</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">2</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home is heavily favored</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addVisitingScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home is slightly favored</td>
+				<td concordion:set="#team">Rebels</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<th>Scenario</th>
+				<th>Home Team</th>
+				<th>Wins</th>
+				<th>Losses</th>
+				<th>Wins at Home</th>
+				<th>Losses at Home</th>
+				<th>Healthiness Factor</th>
+				<th>Favored By</th>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Only advantage is home field</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">0</td>
+				<td concordion:set="#losses">0</td>
+				<td concordion:set="#fieldWins">0</td>
+				<td concordion:set="#fieldLosses">0</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor has better win/loss record</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">2</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home has better win/loss record</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">3</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor has better field win/loss record</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">2</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home has better field win/loss record</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">3</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor has a little better healthiness</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">90</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home has a lot better healthiness</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor is heavily favored</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Visitor is slightly favored</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">0</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home is heavily favored</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">10</td>
+			</tr>
+			<tr concordion:execute="addHomeScenario(#scenario, #team, #wins, #losses, #fieldWins, #fieldLosses, #healthiness, #favoredBy)">
+				<td concordion:set="#scenario">Home is slightly favored</td>
+				<td concordion:set="#team">Empire</td>
+				<td concordion:set="#wins">1</td>
+				<td concordion:set="#losses">1</td>
+				<td concordion:set="#fieldWins">1</td>
+				<td concordion:set="#fieldLosses">1</td>
+				<td concordion:set="#healthiness">100</td>
+				<td concordion:set="#favoredBy">2</td>
+			</tr>
+		</table>
+	</p>
+	</div>
+	<div>
+	<p>
+		When I request a pick of the winner for the game<br/>
+	</p>
+	<p>
+		Then I will get the chosen Winner team and Confidence Factors in the range of 0 to 100<br/>
+		<table concordion:verifyRows="#pick : picks()">
+			<tr>
+				<th concordion:assertEquals="#pick.scenario">Scenario</th>
+				<th concordion:assertEquals="#pick.winner">Winner</th>
+				<th concordion:assertEquals="#pick.confidence">Confidence Factor</th>
+				<th concordion:assertEquals="#pick.visitingConfidence">Visiting Confidence Factor</th>
+				<th concordion:assertEquals="#pick.homeConfidence">Home Confidence Factor</th>
+			</tr>
+			<tr>
+				<td>Only advantage is home field</td>
+				<td>Empire</td>
+				<td>0.48</td>
+				<td>57.85</td>
+				<td>58.33</td>
+			</tr>
+			<tr>
+				<td>Visitor has better win/loss record</td>
+				<td>Rebels</td>
+				<td>4.63</td>
+				<td>74.63</td>
+				<td>70.00</td>
+			</tr>
+			<tr>
+				<td>Home has better win/loss record</td>
+				<td>Empire</td>
+				<td>5.42</td>
+				<td>69.58</td>
+				<td>75.00</td>
+			</tr>
+			<tr>
+				<td>Visitor has better field win/loss record</td>
+				<td>Rebels</td>
+				<td>3.73</td>
+				<td>66.23</td>
+				<td>62.50</td>
+			</tr>
+			<tr>
+				<td>Home has better field win/loss record</td>
+				<td>Empire</td>
+				<td>4.63</td>
+				<td>62.03</td>
+				<td>66.67</td>
+			</tr>
+			<tr>
+				<td>Visitor has a little better healthiness</td>
+				<td>Rebels</td>
+				<td>1.18</td>
+				<td>57.85</td>
+				<td>56.67</td>
+			</tr>
+			<tr>
+				<td>Home has a lot better healthiness</td>
+				<td>Empire</td>
+				<td>8.33</td>
+				<td>50.00</td>
+				<td>58.33</td>
+			</tr>
+			<tr>
+				<td>Visitor is heavily favored</td>
+				<td>Rebels</td>
+				<td>16.29</td>
+				<td>74.63</td>
+				<td>58.33</td>
+			</tr>
+			<tr>
+				<td>Visitor is slightly favored</td>
+				<td>Rebels</td>
+				<td>2.74</td>
+				<td>61.07</td>
+				<td>58.33</td>
+			</tr>
+			<tr>
+				<td>Home is heavily favored</td>
+				<td>Empire</td>
+				<td>17.15</td>
+				<td>57.85</td>
+				<td>75.00</td>
+			</tr>
+			<tr>
+				<td>Home is slightly favored</td>
+				<td>Empire</td>
+				<td>3.69</td>
+				<td>57.85</td>
+				<td>61.54</td>
+			</tr>
+		</table>
+  	</p>
+	</div>
+</body>
+</html>

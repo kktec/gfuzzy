@@ -7,4 +7,6 @@ class Rule {
 	
 	Map<String, String> predicates
 	
+	Double weight
+	
 }

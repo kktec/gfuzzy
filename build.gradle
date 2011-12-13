@@ -1,7 +1,5 @@
 // use Gradle 1.0-milestone-6
 
-evaluationDependsOn (':gfuzzy-core')
-
 group = "org.gfuzzy"
 version = '0.1'
 
@@ -39,8 +37,15 @@ allprojects {
 	dependencies {
 		groovy 'org.codehaus.groovy:groovy:1.7.10'
 		testCompile 'junit:junit:4.8.2'
+		testCompile("org.concordion:concordion:1.4.2")
 	}
 	
+
+	test {
+		def results = "${buildDir}/reports/concordion-results"
+		mkdir results
+		systemProperties 'concordion.output.dir': file(results)
+	}
 }
 
 

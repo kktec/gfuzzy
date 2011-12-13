@@ -22,6 +22,7 @@ ruleset {
 	ruleset('rulesets/junit.xml') {
 		exclude 'JUnitStyleAssertions'
 		exclude 'JUnitSetUpCallsSuper'
+		exclude 'JUnitPublicNonTestMethod'
 	}
 	ruleset('rulesets/logging.xml')
 	ruleset('rulesets/naming.xml') {

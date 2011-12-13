@@ -1,0 +1,103 @@
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+	<h1>FuzzySet with 2 Peaks</h1>
+	
+	<p>
+		As a developer I want to be able a create a FuzzySetDefinition by providing a name and a Map of 2 peak names to values.
+		I then want to fuzzify it with various values. 
+	</p>
+	
+	<div>
+		<p>
+			Given the FuzzySetDefinition name is <b><span concordion:set="#name">Height in the NBA</span></b><br/>
+			And the following zone names and peaks are provided:<br/>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Peak</th>
+				</tr>
+				<tr>
+					<td concordion:set="#zoneName">Short</td><span concordion:execute="addZoneName(#zoneName)"></span>
+					<td concordion:set="#zonePeak">60</td><span concordion:execute="addZonePeak(#zonePeak)"></span>
+				</tr>
+				<tr>
+					<td concordion:set="#zoneName">Tall</td><span concordion:execute="addZoneName(#zoneName)"></span>
+					<td concordion:set="#zonePeak">70</td><span concordion:execute="addZonePeak(#zonePeak)"></span>
+				</tr>
+			</table>
+			When the FuzzySetDefinition is <span concordion:execute="#definition = create(#name)">created</span><br/>
+			Then the FuzzySetDefinition name should be <span concordion:assertEquals="#definition.name">Height in the NBA</span><br/>
+			And the FuzzySetDefinition zones should be:<br/>
+			<table concordion:verifyRows="#zone : #definition.zones">
+				<tr>
+					<th concordion:assertEquals="#zone.name">Name</th>
+					<th concordion:assertEquals="#zone.from">From</th>
+					<th concordion:assertEquals="#zone.to">To</th>
+					<th concordion:assertEquals="#zone.class.simpleName">Type</th>
+				</tr>
+				<tr>
+					<td>Short</td>
+					<td>60.0</td>
+					<td>70.0</td>
+					<td>FallingFuzzyZone</td>
+				</tr>
+				<tr>
+					<td>Tall</td>
+					<td>60.0</td>
+					<td>70.0</td>
+					<td>RisingFuzzyZone</td>
+				</tr>
+			</table>
+		</p>
+	</div>
+	<div>
+		<p>
+			Given the following heights<br/>
+			When the FuzzySetDefinition is <span>fuzzified</span><br/>
+			Then the degree of membership in <span concordion:set="#short">Short</span> and <span concordion:set="#tall">Tall</span> is:<br/>
+			<table concordion:execute="#result = fuzzify(#height)" >
+				<tr>
+					<th concordion:set="#height">Height in inches</th>
+					<th concordion:assertEquals="#result.fuzzyForZone(#short)">Short</th>
+					<th concordion:assertEquals="#result.fuzzyForZone(#tall)">Tall</th>
+				</tr>
+				<tr>
+					<td>59</td>
+					<td>1.0</td>
+					<td>0.0</td>
+				</tr>
+				<tr>
+					<td>60</td>
+					<td>1.0</td>
+					<td>0.0</td>
+				</tr>
+				<tr>
+					<td>62</td>
+					<td>0.8</td>
+					<td>0.2</td>
+				</tr>
+				<tr>
+					<td>65</td>
+					<td>0.5</td>
+					<td>0.5</td>
+				</tr>
+				<tr>
+					<td>67</td>
+					<td>0.3</td>
+					<td>0.7</td>
+				</tr>
+				<tr>
+					<td>70</td>
+					<td>0.0</td>
+					<td>1.0</td>
+				</tr>
+				<tr>
+					<td>71</td>
+					<td>0.0</td>
+					<td>1.0</td>
+				</tr>
+			</table>
+		</p>
+	</div>
+</body>
+</html>
