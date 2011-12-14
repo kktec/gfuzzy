@@ -2,46 +2,38 @@ package org.gfuzzy.test
 
 import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.decider.Decider
-import org.gfuzzy.inference.Rule
+import org.gfuzzy.inference.Inferencer
 import org.gfuzzy.util.DoubleCategory
 
 class FootballGamePicker {
 
-	FuzzySetDefinition win = FuzzySetDefinition.definitionForPeaks('win', [Lose: 0, Tie: 50, Win: 100])
+	def win = FuzzySetDefinition.definitionForPeaks('win', [Lose: 0, Tie: 50, Win: 100])
 
-	FuzzySetDefinition winPercentConstraint = 
+	def winPercentConstraint =
 		FuzzySetDefinition.definitionForPeaks('winLoss', [VeryWeak: 0, Weak: 25, Mediocre: 50, Strong: 75, VeryStrong: 100])
 
-	FuzzySetDefinition fieldWinPercentConstraint = 
+	def fieldWinPercentConstraint =
 		FuzzySetDefinition.definitionForPeaks('field', [VeryWeak: 0, Weak: 25, Mediocre: 50, Strong: 75, VeryStrong: 100])
 
-	FuzzySetDefinition homeFieldConstraint = 
+	def homeFieldConstraint =
 		FuzzySetDefinition.definitionForPeaks('homeField', [Visitor: 0, Home: 1])
 
-	FuzzySetDefinition healthinessConstraint = 
+	def healthinessConstraint =
 		FuzzySetDefinition.definitionForPeaks('healthiness', [Bad: 0, Good: 100])
 
-	FuzzySetDefinition favoredByConstraint = 
+	def favoredByConstraint =
 		FuzzySetDefinition.definitionForPeaks('favoredBy', [NotFavored: 0, Favored: 100])
 
-	List<Rule> rules = [
-		new Rule('Win', [winLoss: 'Strong'], 1.0),
-		new Rule('Tie', [winLoss: 'Mediocre'], 1.0),
-		new Rule('Lose', [winLoss: 'Weak'], 1.0),
-		new Rule('Win', [field: 'Strong'], 0.5),
-		new Rule('Tie', [field: 'Mediocre'], 0.5),
-		new Rule('Lose', [field: 'Weak'], 0.5),
-		new Rule('Win', [homeField: 'Home'], 0.01),
-		new Rule('Lose', [homeField: 'Visitor'], 0.01),
-		new Rule('Win', [healthiness: 'Good'], 0.2),
-		new Rule('Lose', [healthiness: 'Bad'], 0.2),
-		new Rule('Win', [favoredBy: 'Favored'], 1.0),
-		new Rule('Tie', [favoredBy: 'NotFavored'], 1.0),
-	]
+	Inferencer inferencer = new Inferencer(win)
 
-	Decider decider = new Decider(goal:win, rules: rules)
+	Decider decider = new Decider(inferencer)
 
 	FootballGamePicker() {
+		initRules()
+		initDeciderConstraints()
+	}
+
+	private initDeciderConstraints() {
 		decider.with {
 			addConstraint winPercentConstraint
 			addConstraint fieldWinPercentConstraint
@@ -49,6 +41,22 @@ class FootballGamePicker {
 			addConstraint healthinessConstraint
 			addConstraint favoredByConstraint
 		}
+	}
+
+	private initRules() {
+		inferencer
+				.rule('Win', [winLoss: 'Strong'])
+				.rule('Tie', [winLoss: 'Mediocre'])
+				.rule('Lose', [winLoss: 'Weak'])
+				.rule('Win', [field: 'Strong'], 0.5)
+				.rule('Tie', [field: 'Mediocre'], 0.5)
+				.rule('Lose', [field: 'Weak'], 0.5)
+				.rule('Win', [homeField: 'Home'], 0.01)
+				.rule('Lose', [homeField: 'Visitor'], 0.01)
+				.rule('Win', [healthiness: 'Good'], 0.2)
+				.rule('Lose', [healthiness: 'Bad'], 0.2)
+				.rule('Win', [favoredBy: 'Favored'])
+				.rule('Tie', [favoredBy: 'NotFavored'])
 	}
 
 	Pick pick(String scenarioDescription, Scenario visiting, Scenario home) {
@@ -59,8 +67,12 @@ class FootballGamePicker {
 			addConstraintValuesForScenario home
 		}
 
-		def pick = new Pick()
 		Map<String, Number> decisions = decider.decide()
+		pick(decisions, scenarioDescription, visiting, home)
+	}
+	
+	private Pick pick(decisions, scenarioDescription, visiting, home) {
+		def pick = new Pick()
 		pick.with {
 			scenario = scenarioDescription
 			double vc = decisions[visiting.team]
@@ -76,25 +88,24 @@ class FootballGamePicker {
 			}
 		}
 		pick
+
 	}
 
-	void addConstraintValuesForScenario(scenario) {
+	private void addConstraintValuesForScenario(scenario) {
 		final Double FAVORED_BY_SCALING_FACTOR = 15.0
 		decider.with {
 			scenario.with {
-				def alternative = team
-				addConstraintValueForAlternative 'winLoss', percentWins(wins, losses), alternative
-				addConstraintValueForAlternative 'field', percentWins(fieldWins, fieldLosses), alternative
-				addConstraintValueForAlternative 'homeField', athome ? 1d : 0d, alternative
+				addConstraintValueForAlternative 'winLoss', percentWins(wins, losses), team
+				addConstraintValueForAlternative 'field', percentWins(fieldWins, fieldLosses), team
+				addConstraintValueForAlternative 'homeField', athome ? 1d : 0d, team
 				addConstraintValueForAlternative 'healthiness', healthiness, team
-				addConstraintValueForAlternative 'favoredBy', favoredBy * FAVORED_BY_SCALING_FACTOR, alternative
+				addConstraintValueForAlternative 'favoredBy', favoredBy * FAVORED_BY_SCALING_FACTOR, team
 			}
 		}
 	}
-	
-	double percentWins(wins, losses) {
+
+	private double percentWins(wins, losses) {
 		int total = wins + losses
 		100d * wins / total
 	}
-	
 }

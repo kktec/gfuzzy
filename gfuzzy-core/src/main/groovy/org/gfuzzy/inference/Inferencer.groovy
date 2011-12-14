@@ -1,60 +1,38 @@
 package org.gfuzzy.inference
 
-import org.gfuzzy.Fuzzy
 import org.gfuzzy.FuzzySet
+import org.gfuzzy.FuzzySetDefinition
 
 class Inferencer {
 
-	final String name
-
+	final FuzzySetDefinition output
+	
 	List<Rule> rules = []
 
-	Inferencer(String name) {
-		this.name = name
+	Inferencer(FuzzySetDefinition output) {
+		this.output = output
 	}
 
-	void infer(Map<String, FuzzySet> inputs, FuzzySet output) {
+	double infer(Map<String, FuzzySet> inputs) {
+		FuzzySet out = output.set()
 		rules.each { rule ->
-			output[rule.zone] |= processRule(inputs, rule)
+			out[rule.zone] |= rule.process(inputs)
 		}
+		output.defuzzify out
 	}
 
-	Inferencer rule(String zone, Map<String, String>predicates) {
-		rule(zone, predicates, Fuzzy.MAX)
+	Inferencer rule(String zone, Map<String, String> predicates) {
+		rule(zone, predicates, Rule.DEFAULT_WEIGHT)
 	}
 
-	Inferencer rule(String zone, Map<String, String>predicates, Fuzzy weight) {
-		rules << new Rule(zone, predicates, weight.doubleValue())
+	Inferencer rule(String zone, Map<String, String> predicates, double weight) {
+		rules << new Rule(output.name, zone, predicates, weight)
 		this
 	}
 
-	List<String> stringify() {
-		List<String> strings = []
-		rules.each { rule ->
-			def string = 'IF '
-			boolean firstPredicate = true
-			rule.predicates.each { key, value ->
-				if (!firstPredicate) {
-					string += 'AND '
-				}
-				string += "$key.$value "
-				firstPredicate = false
-			}
-			string += "THEN $name.$rule.zone $rule.weight"
-			strings << string
-		}
-		strings
+	List<String> stringifyRules() {
+		rules*.toString()
 	}
 
 
-	private Fuzzy processRule(Map<String, FuzzySet> inputs, rule) {
-		Fuzzy result = Fuzzy.MAX
-		rule.predicates.each { key, value ->
-			Fuzzy fuzzy = inputs[key][value]
-			if(fuzzy != null) {
-				result &= fuzzy
-			}
-		}
-		new Fuzzy(result * rule.weight)
-	}
 }

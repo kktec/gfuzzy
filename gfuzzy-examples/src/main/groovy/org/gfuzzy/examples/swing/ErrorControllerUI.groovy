@@ -22,6 +22,8 @@ import org.gfuzzy.util.DoubleCategory
 
 class ErrorControllerUI {
 
+	static final String OUTPUT = "output"
+
 	def swing = new SwingBuilder()
 	def sampleCount
 
@@ -220,10 +222,10 @@ class ErrorControllerUI {
 	def buildRulesPanel = {
 		swing.panel(preferredSize: [100, 120]) {
 			vbox {
-				label "Rules for $controller.outputInferencer.name inference:"
+				label "Rules for $controller.outputSetDefinition.name inference:"
 				vstrut()
-				controller.outputInferencer.stringify().each {
-					label it
+				controller.outputInferencer.stringifyRules().each { rule ->
+					label rule
 				}
 			}
 		}
@@ -231,11 +233,13 @@ class ErrorControllerUI {
 
 
 	static void main(String[] args) {
+		def outputSetDefinition = FuzzySetDefinition.definitionForPeaks(OUTPUT, [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
+		def errorSetDefinition = FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
 		ErrorController controller = new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
-				errorSetDefinition: FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10]),
-				outputSetDefinition: FuzzySetDefinition.definitionForPeaks("output", [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5]))
+				errorSetDefinition: errorSetDefinition,
+				outputSetDefinition: outputSetDefinition)
 
-		Inferencer inferencer = new Inferencer("output")
+		Inferencer inferencer = new Inferencer(controller.outputSetDefinition)
 			.rule('PL', ['error': 'NL'])
 			.rule('PS', ['error': 'NS'])
 			.rule('ZE', ['error': 'ZE'])

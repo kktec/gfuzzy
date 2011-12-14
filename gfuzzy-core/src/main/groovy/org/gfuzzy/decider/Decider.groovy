@@ -3,19 +3,20 @@ package org.gfuzzy.decider
 import org.gfuzzy.FuzzySet
 import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.inference.Inferencer
-import org.gfuzzy.inference.Rule
 
 class Decider {
+	
+	private final Inferencer inferencer
 
-	private FuzzySetDefinition goal
+	private final Set<String> alternatives = []
 
-	private Set<String> alternatives = []
+	private final Map<String, FuzzySetDefinition> constraints = [:]
 
-	private Map<String, FuzzySetDefinition> constraints = [:]
-
-	private Map<String, Map<String, Number>> alternativeConstraintValues = [:]
-
-	private List<Rule> rules = []
+	private final Map<String, Map<String, Number>> alternativeConstraintValues = [:]
+	
+	Decider(Inferencer inferencer) {
+		this.inferencer = inferencer
+	}
 
 	void addAlternative(alternative) {
 		alternatives << alternative
@@ -23,10 +24,6 @@ class Decider {
 
 	void addConstraint(FuzzySetDefinition constraint) {
 		constraints[constraint.name] = constraint
-	}
-
-	void addRule(Rule rule) {
-		rules << rule
 	}
 
 	void addConstraintValueForAlternative(String constraint, Number value, String alternative) {
@@ -43,21 +40,13 @@ class Decider {
 		alternatives.each { alternative ->
 			Map<String, Number> constraintValues = alternativeConstraintValues[alternative]
 			Map<String, FuzzySet> constraintFuzzySets = constraintFuzzySets(constraintValues)
-			double decision = infer(alternative, constraintFuzzySets)
-			decisions[alternative] = decision
+//			println constraintFuzzySets
+			decisions[alternative] = inferencer.infer(constraintFuzzySets)
 		}
 		decisions
 	}
 
-	private double infer(alternative, constraintFuzzySets) {
-		Inferencer inferencer = new Inferencer(alternative)
-		inferencer.rules = rules
-		FuzzySet goalSet = goal.set()
-		inferencer.infer(constraintFuzzySets, goalSet)
-		goal.defuzzify(goalSet)
-	}
-
-	private Map<String, FuzzySet> constraintFuzzySets(Map constraintValues) {
+	private Map<String, FuzzySet> constraintFuzzySets(Map<String, Number> constraintValues) {
 		Map<String, FuzzySet> constraintFuzzySets = [:]
 		constraintValues.each { constraint, value ->
 			FuzzySet set = constraints[constraint].fuzzify(value)
@@ -65,6 +54,27 @@ class Decider {
 		}
 		constraintFuzzySets
 	}
+
+//	private Map<String, FuzzySet> constraintFuzzySets(Map<String, Number> constraintValues) {
+//		Map<String, FuzzySet> constraintFuzzySets = [:]
+//		alternatives.each { alternative ->
+//			constraints.each { constraint ->
+//
+//			}
+//		}
+//		constraintFuzzySets
+//	}
+
+//	private FuzzySet constraintFuzzySet(FuzzySetDefinition constraint, Map<String, Number> constraintValues) {
+//		FuzzySet set
+//		def value = constraintValues[constraint.name]
+//		if(value != null) {
+//			set = constraints[constraint.name].fuzzify(value)
+//		} else {
+//			set = constraint.set()
+//		}
+//	}
+
 }
 
 

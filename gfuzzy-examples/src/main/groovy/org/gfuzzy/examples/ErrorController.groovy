@@ -24,11 +24,11 @@ class ErrorController {
 	
 	double setpoint
 
-	double output
-	
 	double input
 	
 	double error
+	
+	double output
 	
 	double result
 
@@ -37,20 +37,16 @@ class ErrorController {
 		error = input - setpoint
 		
 		def errors = errorSetDefinition.fuzzify(error)
-		def outputs = outputSetDefinition.set()
 		def inputs = [error: errors]
-		outputInferencer.infer(inputs, outputs)
-
-		result = outputSetDefinition.defuzzify(outputs)
+		
+		result = outputInferencer.infer(inputs)
 		if(positioner) {
 			output = result
 		} else {
 			output += result
 		}
 		
-		use(RangeCategory) {
-			output = outputRange.limit(output)
-		}
+		output = RangeCategory.limit(outputRange, output)
 	}
 
 }

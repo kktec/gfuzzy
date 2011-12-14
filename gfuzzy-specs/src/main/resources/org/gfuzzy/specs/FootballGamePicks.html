@@ -8,20 +8,20 @@
 	<p>
 		Given a home team and a visiting team<br/>
 		With the folowing rules:
-		<table concordion:verifyRows="#rule : ruleStrings()">
+		<table concordion:verifyRows="#rule : rules()">
 			<tr><th concordion:assertEquals="#rule">Rule</th></tr>
-			<tr><td>IF winLoss.Strong THEN win.Win 1.0</td></tr>
-			<tr><td>IF winLoss.Mediocre THEN win.Tie 1.0</td></tr>
-			<tr><td>IF winLoss.Weak THEN win.Lose 1.0</td></tr>
-			<tr><td>IF field.Strong THEN win.Win 0.5</td></tr>
-			<tr><td>IF field.Mediocre THEN win.Tie 0.5</td></tr>
-			<tr><td>IF field.Weak THEN win.Lose 0.5</td></tr>
-			<tr><td>IF homeField.Home THEN win.Win 0.01</td></tr>
-			<tr><td>IF homeField.Visitor THEN win.Lose 0.01</td></tr>
-			<tr><td>IF healthiness.Good THEN win.Win 0.2</td></tr>
-			<tr><td>IF healthiness.Bad THEN win.Lose 0.2</td></tr>
-			<tr><td>IF favoredBy.Favored THEN win.Win 1.0</td></tr>
-			<tr><td>IF favoredBy.NotFavored THEN win.Tie 1.0</td></tr>
+			<tr><td>IF winLoss.Strong THEN win.Win * 1.0</td></tr>
+			<tr><td>IF winLoss.Mediocre THEN win.Tie * 1.0</td></tr>
+			<tr><td>IF winLoss.Weak THEN win.Lose * 1.0</td></tr>
+			<tr><td>IF field.Strong THEN win.Win * 0.5</td></tr>
+			<tr><td>IF field.Mediocre THEN win.Tie * 0.5</td></tr>
+			<tr><td>IF field.Weak THEN win.Lose * 0.5</td></tr>
+			<tr><td>IF homeField.Home THEN win.Win * 0.01</td></tr>
+			<tr><td>IF homeField.Visitor THEN win.Lose * 0.01</td></tr>
+			<tr><td>IF healthiness.Good THEN win.Win * 0.2</td></tr>
+			<tr><td>IF healthiness.Bad THEN win.Lose * 0.2</td></tr>
+			<tr><td>IF favoredBy.Favored THEN win.Win * 1.0</td></tr>
+			<tr><td>IF favoredBy.NotFavored THEN win.Tie * 1.0</td></tr>
 		</table>
 		<ul>
 			And the following constraints
