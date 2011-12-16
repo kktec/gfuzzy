@@ -1,5 +1,7 @@
 package org.gfuzzy.test
 
-class Pick {
+class PickAsStrings {
+	
 	String scenario, winner, confidence, visiting, home, visitingConfidence, homeConfidence
+	
 }

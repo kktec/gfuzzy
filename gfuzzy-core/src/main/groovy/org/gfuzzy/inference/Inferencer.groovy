@@ -18,7 +18,7 @@ class Inferencer {
 		rules.each { rule ->
 			out[rule.zone] |= rule.process(inputs)
 		}
-		output.defuzzify out
+		output.defuzzify(out)
 	}
 
 	Inferencer rule(String zone, Map<String, String> predicates) {

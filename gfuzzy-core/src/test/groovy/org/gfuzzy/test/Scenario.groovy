@@ -4,8 +4,8 @@ class Scenario {
 
 	String team
 	boolean athome
-	int wins, losses, fieldWins, fieldLosses, favoredBy 
-	double healthiness 
+	int wins, losses, fieldWins, fieldLosses 
+	double healthiness, favoredBy 
 
 	Scenario(team, athome, wins, losses, fieldWins, fieldLosses, healthiness, favoredBy) {
 		this.team = team
@@ -15,6 +15,10 @@ class Scenario {
 		this.fieldWins = Integer.parseInt(fieldWins)
 		this.fieldLosses = Integer.parseInt(fieldLosses)
 		this.healthiness = Double.parseDouble(healthiness)
-		this.favoredBy = Integer.parseInt(favoredBy)
+		this.favoredBy = Double.parseDouble(favoredBy)
+	}
+	
+	String toString() {
+		"$team $athome"
 	}
 }

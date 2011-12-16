@@ -28,12 +28,19 @@ class FootballGamePicker {
 
 	Decider decider = new Decider(inferencer)
 
-	FootballGamePicker() {
-		initRules()
-		initDeciderConstraints()
-	}
+	Picks picks(String scenarioDescription, Scenario visiting, Scenario home) {
+		decider.with {
+			addAlternative visiting.team
+			addConstraintValuesForScenario visiting
+			addAlternative home.team
+			addConstraintValuesForScenario home
+		}
 
-	private initDeciderConstraints() {
+		Map<String, Number> decisions = decider.decide()
+		picks(decisions, scenarioDescription, visiting, home)
+	}
+	
+	def initDeciderConstraints = {
 		decider.with {
 			addConstraint winPercentConstraint
 			addConstraint fieldWinPercentConstraint
@@ -43,7 +50,7 @@ class FootballGamePicker {
 		}
 	}
 
-	private initRules() {
+	def initRules = {
 		inferencer
 				.rule('Win', [winLoss: 'Strong'])
 				.rule('Tie', [winLoss: 'Mediocre'])
@@ -59,35 +66,20 @@ class FootballGamePicker {
 				.rule('Tie', [favoredBy: 'NotFavored'])
 	}
 
-	Pick pick(String scenarioDescription, Scenario visiting, Scenario home) {
-		decider.with {
-			addAlternative visiting.team
-			addConstraintValuesForScenario visiting
-			addAlternative home.team
-			addConstraintValuesForScenario home
-		}
-
-		Map<String, Number> decisions = decider.decide()
-		pick(decisions, scenarioDescription, visiting, home)
-	}
-	
-	private Pick pick(decisions, scenarioDescription, visiting, home) {
-		def pick = new Pick()
-		pick.with {
+	private Picks picks(decisions, scenarioDescription, visiting, home) {
+		def picks = new Picks()
+		picks.with {
 			scenario = scenarioDescription
-			double vc = decisions[visiting.team]
-			visitingConfidence = DoubleCategory.format(vc, 2)
-			double hc = decisions[home.team]
-			homeConfidence = DoubleCategory.format(hc, 2)
-			double c = Math.abs(hc - vc)
-			confidence = DoubleCategory.format(c, 2)
-			if (confidence == '0.00') {
-				winner = 'Cannot pick a Winner'
+			visitingConfidence = decisions[visiting.team]
+			homeConfidence = decisions[home.team]
+			confidence = Math.abs(homeConfidence - visitingConfidence)
+			if (confidence == 0d) {
+				winner = "Cannot pick a Winner $visiting.team vs. $home.team"
 			} else {
-				winner = hc > vc ? "$home.team" : "$visiting.team"
+				winner = homeConfidence > visitingConfidence ? "$home.team" : "$visiting.team"
 			}
 		}
-		pick
+		picks
 
 	}
 
