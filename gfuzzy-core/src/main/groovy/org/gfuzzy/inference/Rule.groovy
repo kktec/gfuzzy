@@ -14,15 +14,16 @@ class Rule {
 
 	private final double weight
 
-	Rule(set, zone, predicates, weight) {
-		this.actionSetName = set
-		this.actionZoneName = zone
+	Rule(actionSetName, actionZoneName, predicates, weight) {
+		this.actionSetName = actionSetName
+		this.actionZoneName = actionZoneName
 		this.predicates = predicates
 		this.weight = weight
 	}
 
-	Rule(set, zone, predicates) {
-		this(set, zone, predicates, DEFAULT_WEIGHT)
+	Rule(actionSetName, actionZoneName, predicates) {
+		this(actionSetName, actionZoneName, predicates, DEFAULT_WEIGHT)
+		printf 'called without weight'
 	}
 	
 	Fuzzy action(conditions) {
@@ -47,5 +48,6 @@ class Rule {
 			firstPredicate = false
 		}
 		builder << "THEN $actionSetName.$actionZoneName * $weight"
+		builder.toString()
 	}
 }

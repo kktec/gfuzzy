@@ -31,7 +31,7 @@ class RuleTests {
 	}
 
 	@Test
-	void immutable() {
+	void isImmutable() {
 		new GroovyTestCase().with {
 			shouldFail { rule.actionSetName = 'set' }
 			shouldFail { rule.actionZoneName = 'z' }

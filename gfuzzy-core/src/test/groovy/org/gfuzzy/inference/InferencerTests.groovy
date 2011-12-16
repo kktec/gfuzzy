@@ -15,9 +15,9 @@ class InferencerTests {
 	FuzzySetDefinition inputDef2 = definitionForPeaks('input2', [N:-25, Z:0, P:25])
 	FuzzySetDefinition outputDef = definitionForPeaks('output', [N:-2.5, Z:0, P:2.5])
 
-	FuzzySet fuzzySet0 = inputDef0.fuzzify(2.5)
-	FuzzySet fuzzySet1 = inputDef1.fuzzify(5)
-	FuzzySet fuzzySet2 = inputDef2.fuzzify(-6)
+	def fuzzySet0 = inputDef0.fuzzify(2.5)
+	def fuzzySet1 = inputDef1.fuzzify(5)
+	def fuzzySet2 = inputDef2.fuzzify(-6)
 
 	Inferencer inferencer = new Inferencer(outputDef)
 
@@ -50,11 +50,15 @@ class InferencerTests {
 		inferencer
 				.rule('N', [input0:'Z'])
 				.rule('X', [input0:'P', input1:'Z', input2:'N'], 0.5)
-		def expected = [
+		def expectations = [
 			"IF input0.Z THEN output.N * 1.0",
 			"IF input0.P AND input1.Z AND input2.N THEN output.X * 0.5"
 		]
-		assertEquals expected, inferencer.stringifyRules()
+		def actuals = inferencer.stringifyRules()
+		for (int i = 0; i < expectations.size(); i++) { 
+			assertEquals expectations[i], actuals[i]
+		}
+		assertEquals inferencer.rules.size(), actuals.size()
 	}
 
 	private double infer() {
