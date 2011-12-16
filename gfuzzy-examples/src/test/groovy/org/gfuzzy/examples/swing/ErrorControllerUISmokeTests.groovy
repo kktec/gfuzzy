@@ -2,16 +2,22 @@ package org.gfuzzy.examples.swing
 
 import static org.junit.Assert.*
 
-import java.awt.event.WindowEvent
-
+import org.junit.After
 import org.junit.Test
 
 class ErrorControllerUISmokeTests {
 
+	def controller = ErrorControllerUI.create()
+	def ui = new ErrorControllerUI(controller:controller)
+
+	@After
+	void teardown() {
+		ui?.closeWindow()
+	}
+
 	@Test
 	void canCreateUI_withoutDisplayingIt() {
-		def ui = new ErrorControllerUI(controller:ErrorControllerUI.create())
+		assertNotNull ui
 		ui.initUI()
-		ui.close()
 	}
 }

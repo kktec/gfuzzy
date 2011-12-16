@@ -32,7 +32,7 @@ class ErrorControllerUI {
 	def swing = new SwingBuilder()
 	def sampleCount = 500
 
-	def JFrame frame
+	JFrame frame
 
 	JSlider inputSlider
 	Color inputColor = new Color(0, 150, 0)
@@ -80,7 +80,7 @@ class ErrorControllerUI {
 	FuzzySetPanel errorPanel
 	FuzzySetPanel outputPanel
 	
-	void close() {
+	void closeWindow() {
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED))
 	}
 
