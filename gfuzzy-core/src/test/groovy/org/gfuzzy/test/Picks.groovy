@@ -1,6 +1,6 @@
 package org.gfuzzy.test
 
-import org.gfuzzy.util.DoubleCategory
+import static org.gfuzzy.util.DoubleCategory.*
 
 class Picks	implements Comparable<Picks> {
 
@@ -12,14 +12,14 @@ class Picks	implements Comparable<Picks> {
 	}
 
 	PickAsStrings asStrings(int digits) {
-		PickAsStrings asStrings = new PickAsStrings(scenario:scenario, winner:winner, visiting:visiting, home:home,
-			confidence:DoubleCategory.format(confidence, digits),
-			visitingConfidence:DoubleCategory.format(visitingConfidence, digits),
-			homeConfidence:DoubleCategory.format(homeConfidence, digits)
-		)
+		new PickAsStrings(scenario:scenario, winner:winner, visiting:visiting, home:home,
+				confidence:format(confidence, digits),
+				visitingConfidence:format(visitingConfidence, digits),
+				homeConfidence:format(homeConfidence, digits)
+				)
 	}
 
 	String toString() {
-		"$winner $confidence" + "   visiting:$visitingConfidence   home:$homeConfidence"
+		"$winner $confidence   visiting:$visitingConfidence   home:$homeConfidence"
 	}
 }

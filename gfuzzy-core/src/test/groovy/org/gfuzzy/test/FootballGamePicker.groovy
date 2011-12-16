@@ -3,7 +3,6 @@ package org.gfuzzy.test
 import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.decider.Decider
 import org.gfuzzy.inference.Inferencer
-import org.gfuzzy.util.DoubleCategory
 
 class FootballGamePicker {
 

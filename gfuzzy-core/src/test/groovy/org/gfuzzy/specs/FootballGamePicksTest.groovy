@@ -2,7 +2,6 @@ package org.gfuzzy.specs
 
 import org.concordion.integration.junit4.ConcordionRunner
 import org.gfuzzy.test.FootballGamePicker
-import org.gfuzzy.test.PickAsStrings;
 import org.gfuzzy.test.Picks
 import org.gfuzzy.test.Scenario
 import org.junit.runner.RunWith
