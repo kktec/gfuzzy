@@ -24,11 +24,12 @@ class ErrorControllerUI {
 
 	static final String OUTPUT = "output"
 
-	def swing = new SwingBuilder()
-	def sampleCount
+	def input = 0.0
 
 	ErrorController controller
-	def input = 0.0
+
+	def swing = new SwingBuilder()
+	def sampleCount = 500
 
 	JSlider inputSlider
 	Color inputColor = new Color(0, 150, 0)
@@ -75,17 +76,16 @@ class ErrorControllerUI {
 	ControllerTrendPanel trendPanel
 	FuzzySetPanel errorPanel
 	FuzzySetPanel outputPanel
-
-	void init() {
-		errorPanel = new FuzzySetPanel(fuzzySetDefinition: controller.errorSetDefinition)
-		outputPanel = new FuzzySetPanel(fuzzySetDefinition: controller.outputSetDefinition)
-
+	
+	void initUI() {
 		def lafs = UIManager.installedLookAndFeels
 		def nimbus = lafs.find { it.name == 'Nimbus' }
 		if (nimbus) {
 			swing.lookAndFeel('nimbus')
 		}
 
+	errorPanel = new FuzzySetPanel(fuzzySetDefinition: controller.errorSetDefinition)
+	outputPanel = new FuzzySetPanel(fuzzySetDefinition: controller.outputSetDefinition)
 		swing.frame(title: "gfuzzy Controller Demo",
 				defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
 				location: [100, 200],
@@ -218,35 +218,36 @@ class ErrorControllerUI {
 			updateButton = button(actionPerformed: updateAction, "Update Controller")
 		}
 	}
-	
+
 	def buildRulesPanel = {
 		swing.panel(preferredSize: [100, 120]) {
 			vbox {
 				label "Rules for $controller.outputSetDefinition.name inference:"
 				vstrut()
-				controller.outputInferencer.stringifyRules().each { rule ->
-					label rule
-				}
+				controller.outputInferencer.stringifyRules().each { rule -> label rule }
 			}
 		}
 	}
 
 
 	static void main(String[] args) {
+		new ErrorControllerUI(controller:create()).initUI()
+	}
+	
+	static ErrorController create() {
 		def outputSetDefinition = FuzzySetDefinition.definitionForPeaks(OUTPUT, [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
 		def errorSetDefinition = FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
-		ErrorController controller = new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
-				errorSetDefinition: errorSetDefinition,
-				outputSetDefinition: outputSetDefinition)
-
-		Inferencer inferencer = new Inferencer(controller.outputSetDefinition)
-			.rule('PL', ['error': 'NL'])
-			.rule('PS', ['error': 'NS'])
-			.rule('ZE', ['error': 'ZE'])
-			.rule('NS', ['error': 'PS'])
-			.rule('NL', ['error': 'PL'])
-		controller.outputInferencer = inferencer
-
-		new ErrorControllerUI(controller: controller, sampleCount: 500).init()
+		
+		Inferencer inferencer = new Inferencer(outputSetDefinition)
+		.rule('PL', ['error': 'NL'])
+		.rule('PS', ['error': 'NS'])
+		.rule('ZE', ['error': 'ZE'])
+		.rule('NS', ['error': 'PS'])
+		.rule('NL', ['error': 'PL'])
+	
+		new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
+			errorSetDefinition: errorSetDefinition,
+			outputSetDefinition: outputSetDefinition,
+			outputInferencer: inferencer)
 	}
 }

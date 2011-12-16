@@ -6,17 +6,17 @@ class Rule {
 
 	static final double DEFAULT_WEIGHT = 1d
 
-	private final String set
+	private final String actionSetName
 
-	private final String zone
+	private final String actionZoneName
 
 	private final Map<String, String> predicates
 
 	private final double weight
 
 	Rule(set, zone, predicates, weight) {
-		this.set = set
-		this.zone = zone
+		this.actionSetName = set
+		this.actionZoneName = zone
 		this.predicates = predicates
 		this.weight = weight
 	}
@@ -25,26 +25,27 @@ class Rule {
 		this(set, zone, predicates, DEFAULT_WEIGHT)
 	}
 	
-	Fuzzy process(inputs) {
-		Fuzzy result = Fuzzy.MAX
-		predicates.each { key, value ->
-			def set = inputs[key]
-			Fuzzy fuzzy = set[value]
-				result &= fuzzy
+	Fuzzy action(conditions) {
+		Fuzzy action = Fuzzy.MAX
+		predicates.each { setName, zoneName ->
+			def condition = conditions[setName]
+			Fuzzy fuzzy = condition[zoneName]
+				action &= fuzzy
 			}
-		new Fuzzy(result * weight)
+		new Fuzzy(action * weight)
 	}
-
+	
+	@Override
 	String toString() {
-		String string = 'IF '
+		StringBuilder builder = new StringBuilder('IF ')
 		boolean firstPredicate = true
 		predicates.each { key, value ->
 			if (!firstPredicate) {
-				string += 'AND '
+				builder << 'AND '
 			}
-			string += "$key.$value "
+			builder << "$key.$value "
 			firstPredicate = false
 		}
-		string += "THEN $set.$zone * $weight"
+		builder << "THEN $actionSetName.$actionZoneName * $weight"
 	}
 }

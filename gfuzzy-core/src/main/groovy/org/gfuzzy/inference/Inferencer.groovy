@@ -16,7 +16,7 @@ class Inferencer {
 	double infer(Map<String, FuzzySet> inputs) {
 		FuzzySet out = output.set()
 		rules.each { rule ->
-			out[rule.zone] |= rule.process(inputs)
+			out[rule.actionZoneName] |= rule.action(inputs)
 		}
 		output.defuzzify(out)
 	}

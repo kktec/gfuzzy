@@ -33,8 +33,8 @@ class RuleTests {
 	@Test
 	void immutable() {
 		new GroovyTestCase().with {
-			shouldFail { rule.set = 'set' }
-			shouldFail { rule.zone = 'z' }
+			shouldFail { rule.actionSetName = 'set' }
+			shouldFail { rule.actionZoneName = 'z' }
 			shouldFail { rule.predicates = [:] }
 			shouldFail { rule.weight = 0.5 }
 		}
@@ -42,11 +42,11 @@ class RuleTests {
 	
 	@Test
 	void process_andsThePredicates_andAppliesTheWeight() {
-		def input0 = [N: new Fuzzy(0.4), Z: Fuzzy.MIN, P: Fuzzy.MIN]
-		def input1 = [N: Fuzzy.MIN, Z: Fuzzy.MIN, P: new Fuzzy(0.6)]
-		def inputs = [input0: input0, input1: input1]
-		assertEquals "should be the lesser of the applied predicates multiplied by weight",
-			new Fuzzy(0.2), rule.process(inputs)
+		def condition0 = [N: new Fuzzy(0.4), Z: Fuzzy.MIN, P: Fuzzy.MIN]
+		def condition1 = [N: Fuzzy.MIN, Z: Fuzzy.MIN, P: new Fuzzy(0.6)]
+		def conditions = [input0: condition0, input1: condition1]
+		assertEquals "action should be the lesser of the applied predicates multiplied by weight",
+			new Fuzzy(0.2), rule.action(conditions)
 	}
 
 	@Test
@@ -55,7 +55,7 @@ class RuleTests {
 	}
 
 	private assertRuleValuesWithWeight(double weight) {
-		assertEquals Z, rule.zone
+		assertEquals Z, rule.actionZoneName
 		assertEquals N, rule.predicates[INPUT0]
 		assertEquals P, rule.predicates[INPUT1]
 		assertEquals weight, rule.weight, 0.1
