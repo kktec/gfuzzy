@@ -5,8 +5,10 @@ import groovy.swing.SwingBuilder
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Font
+import java.awt.event.WindowEvent
 
 import javax.swing.JButton
+import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JProgressBar
 import javax.swing.JSlider
@@ -16,7 +18,6 @@ import javax.swing.WindowConstants
 import org.gfuzzy.FuzzySetDefinition
 import org.gfuzzy.examples.ErrorController
 import org.gfuzzy.inference.Inferencer
-import org.gfuzzy.inference.Rule
 import org.gfuzzy.swing.FuzzySetPanel
 import org.gfuzzy.util.DoubleCategory
 
@@ -30,6 +31,8 @@ class ErrorControllerUI {
 
 	def swing = new SwingBuilder()
 	def sampleCount = 500
+
+	def JFrame frame
 
 	JSlider inputSlider
 	Color inputColor = new Color(0, 150, 0)
@@ -77,6 +80,10 @@ class ErrorControllerUI {
 	FuzzySetPanel errorPanel
 	FuzzySetPanel outputPanel
 	
+	void close() {
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED))
+	}
+
 	void initUI() {
 		def lafs = UIManager.installedLookAndFeels
 		def nimbus = lafs.find { it.name == 'Nimbus' }
@@ -84,13 +91,13 @@ class ErrorControllerUI {
 			swing.lookAndFeel('nimbus')
 		}
 
-	errorPanel = new FuzzySetPanel(fuzzySetDefinition: controller.errorSetDefinition)
-	outputPanel = new FuzzySetPanel(fuzzySetDefinition: controller.outputSetDefinition)
-		swing.frame(title: "gfuzzy Controller Demo",
+		errorPanel = new FuzzySetPanel(fuzzySetDefinition: controller.errorSetDefinition)
+		outputPanel = new FuzzySetPanel(fuzzySetDefinition: controller.outputSetDefinition)
+		frame = swing.frame(title: "gfuzzy Controller Demo",
 				defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
 				location: [100, 200],
 				preferredSize: [1000, 900],
-				pack:true, show:true) {
+				pack:true) {
 					scrollPane {
 						panel {
 							vbox {
@@ -231,23 +238,25 @@ class ErrorControllerUI {
 
 
 	static void main(String[] args) {
-		new ErrorControllerUI(controller:create()).initUI()
+		def ui = new ErrorControllerUI(controller:create())
+		ui.initUI()
+		ui.frame.visible = true
 	}
-	
+
 	static ErrorController create() {
 		def outputSetDefinition = FuzzySetDefinition.definitionForPeaks(OUTPUT, [NL:-5, NS:-2.5, ZE:0, PS:2.5, PL:5])
 		def errorSetDefinition = FuzzySetDefinition.definitionForPeaks("error", [NL:-10, NS:-5, ZE:0, PS:5, PL:10])
-		
+
 		Inferencer inferencer = new Inferencer(outputSetDefinition)
-		.rule('PL', ['error': 'NL'])
-		.rule('PS', ['error': 'NS'])
-		.rule('ZE', ['error': 'ZE'])
-		.rule('NS', ['error': 'PS'])
-		.rule('NL', ['error': 'PL'])
-	
+				.rule('PL', ['error': 'NL'])
+				.rule('PS', ['error': 'NS'])
+				.rule('ZE', ['error': 'ZE'])
+				.rule('NS', ['error': 'PS'])
+				.rule('NL', ['error': 'PL'])
+
 		new ErrorController(range: 0..100, outputRange: 0..100, setpoint: 50,
-			errorSetDefinition: errorSetDefinition,
-			outputSetDefinition: outputSetDefinition,
-			outputInferencer: inferencer)
+				errorSetDefinition: errorSetDefinition,
+				outputSetDefinition: outputSetDefinition,
+				outputInferencer: inferencer)
 	}
 }
