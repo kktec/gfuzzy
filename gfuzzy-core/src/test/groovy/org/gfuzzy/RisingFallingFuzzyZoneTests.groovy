@@ -123,7 +123,7 @@ class RisingFallingFuzzyZoneTests extends FuzzyZoneTestCase {
 			assertEquals(-3.75D, defuzzify(new Fuzzy(0.75)))
 			assertEquals(-2.5D, defuzzify(new Fuzzy(0.5)))
 			assertEquals(-1.25D, defuzzify(new Fuzzy(0.25)))
-			assertEquals(-0D, defuzzify(Fuzzy.MIN))
+			assertEquals(-0D, -1 * defuzzify(Fuzzy.MIN))
 		}
 	}
 	

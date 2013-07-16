@@ -1,32 +1,24 @@
-// use Gradle 1.0-milestone-6
-
 group = "org.gfuzzy"
 version = '0.1'
 
 allprojects {
 	
-	defaultTasks 'clean', 'build', 'codeNarc', 'cobertura', 'groovydoc', 'projectReport'
+	defaultTasks 'clean', 'build', 'codeNarcMain', 'codeNarcMain', 'groovydoc', 'projectReport'
 	
 	apply plugin: 'groovy'
 	
 	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
 	
 	apply plugin: 'eclipse'
-	eclipse {
-		pathVariables 'GRADLE_USER_HOME': gradle.gradleUserHomeDir
-		classpath {
-			containers.clear()
-			containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-$sourceCompatibility"
-		}
+	
+	apply plugin: 'codenarc'
+	codenarc {
+		toolVersion = '0.18'
+		configFile = file('../config/codenarc/rules.groovy')
+		ignoreFailures = true
 	}
-	
-	apply from: 'https://raw.github.com/evgeny-goldin/gradle-plugins/master/src/main/groovy/CodeNarc.gradle'
-	codenarcVersion      = '0.16'
-	codenarcRuleSetFiles = [ 'config/codenarc/rules.groovy' ]
-	
-	// uses 1.0-milestone-5 deprecated sourceSet.classesDir, should now use output.classesDir
-	apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/ivy/gradle_cobertura/gradle_cobertura/1.0-rc4/coberturainit.gradle'
-	coverageSourceDirs = ['src/main/groovy']
+
 	
 	apply plugin: 'project-report'
 	
@@ -35,8 +27,8 @@ allprojects {
 	}
 	
 	dependencies {
-		groovy 'org.codehaus.groovy:groovy:1.7.10'
-		testCompile 'junit:junit:4.8.2'
+		compile 'org.codehaus.groovy:groovy:1.8.8'
+		testCompile 'junit:junit:4.10'
 		testCompile("org.concordion:concordion:1.4.2")
 	}
 	
@@ -47,6 +39,11 @@ allprojects {
 		systemProperties 'concordion.output.dir': file(results)
 	}
 }
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.6'
+}
+
 
 
 
