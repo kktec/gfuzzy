@@ -1,5 +1,8 @@
-gfuzzy is a simple Groovy library that provides an implementation of Fuxxy Logic,
+gfuzzy is a simple Groovy library that provides an implementation of Fuzzy Logic,
 see http://en.wikipedia.org/wiki/Fuzzy_logic
+
+This project was created as a learning experience for me to learn to program with Groovy and dynamoic languages.
+Although it works well and is usable, I will probably rewrite it at some point with knowledge gained in recent years.
 
 The project currently has 3 sub-projects, gfuzzy-core, which implements the library itself, gfuzzy-example, which shows how it can be used, and gfuzzy-swing to provide some user interface.
 
